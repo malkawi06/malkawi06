@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>C-Layer Case Study | Mohammad H. Malkawi</title>
+    <meta name="description" content="C-Layer: a concept design for autonomous, multi-layer CO2 capture on heavy-industry stacks with robotic filter swapping and LSTM predictive maintenance." />
+    <link rel="canonical" href="https://malkawi06.github.io/malkawi06/projects/c-layer.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mohammad H. Malkawi" />
+    <meta property="og:title" content="C-Layer Case Study | Mohammad H. Malkawi" />
+    <meta property="og:description" content="A concept design for autonomous, multi-layer CO2 capture on heavy-industry stacks with robotic filter swapping and LSTM predictive maintenance." />
+    <meta property="og:url" content="https://malkawi06.github.io/malkawi06/projects/c-layer.html" />
+    <meta property="og:image" content="https://malkawi06.github.io/malkawi06/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mohammad H. Malkawi, networks and security student, with a 3D city model" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="C-Layer Case Study | Mohammad H. Malkawi" />
+    <meta name="twitter:description" content="A concept design for autonomous, multi-layer CO2 capture on heavy-industry stacks with robotic filter swapping and LSTM predictive maintenance." />
+    <meta name="twitter:image" content="https://malkawi06.github.io/malkawi06/og.png" />
+    <meta name="author" content="Mohammad H. Malkawi" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f5f1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316161a'/%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='%23f2a516'/%3E%3Crect x='17' y='17' width='8' height='8' rx='2' fill='%23f5f5f1'/%3E%3C/svg%3E" />
+    <script>
+      (function () {
+        var d = document.documentElement, t, h = d.getAttribute("data-theme");
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") t = h === "light" || h === "dark" ? h : null;
+        if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        d.setAttribute("data-theme", t);
+        d.classList.add("js");
+      })();
+    </script>
+  </head>
+  <body data-root="../">
+    <a class="skip" href="#main">Skip to Content</a>
+    <header class="nav" data-nav>
+      <div class="nav__inner wrap">
+        <a class="brand" href="../" aria-label="Mohammad H. Malkawi, home">
+          <span class="brand__mark" aria-hidden="true"><i></i><i></i></span>
+          <span translate="no">Malkawi</span>
+        </a>
+        <nav class="nav__links" aria-label="Sections">
+          <a href="../#about">About</a>
+          <a href="../#projects">Projects</a>
+          <a href="../#leadership">Leadership</a>
+          <a href="../#toolkit">Toolkit</a>
+          <a href="../#contact">Contact</a>
+        </nav>
+        <div class="nav__actions">
+          <button class="icon-btn" type="button" data-term-open aria-label="Open terminal" title="Terminal (Ctrl K)"><span data-icon="terminal-window"></span></button>
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to dark theme">
+            <span data-icon="moon" class="only-light"></span>
+            <span data-icon="sun" class="only-dark"></span>
+          </button>
+          <a class="btn btn--primary btn--sm nav__cta" href="mailto:malkawimohammadh@gmail.com">Email Me</a>
+          <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+            <span data-icon="list" class="menu-open"></span>
+            <span data-icon="x" class="menu-close"></span>
+          </button>
+        </div>
+      </div>
+      <nav class="menu wrap" id="menu" data-menu hidden aria-label="Sections">
+        <a href="../#about">About</a>
+        <a href="../#projects">Projects</a>
+        <a href="../#leadership">Leadership</a>
+        <a href="../#toolkit">Toolkit</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main" class="wrap casepage">
+      <a class="back" href="../#projects"><span data-icon="arrow-left"></span>All projects</a>
+
+      <header class="cp-head">
+        <div class="cp-head__copy">
+          <p class="section__num">Case study <span>Climate tech</span></p>
+          <h1 translate="no">C-Layer</h1>
+          <p class="cp-lede">A multi-layer robotic system designed to capture CO<sub>2</sub> from heavy-industry stacks automatically, without stopping the plant.</p>
+          <ul class="cp-chips">
+            <li class="chip">Self-initiated</li>
+            <li class="chip">Sole designer</li>
+            <li class="chip chip--accent">Concept design, no prototype built yet</li>
+          </ul>
+        </div>
+        <figure class="card cp-model">
+          <canvas data-cart-canvas role="img" aria-label="3D model of the C-Layer filter stack with one layer sliding out"></canvas>
+          <figcaption>The robot swaps a saturated layer</figcaption>
+        </figure>
+      </header>
+
+      <figure class="card cp-media">
+        <img src="../img/clayer-light.webp" alt="Stylized industrial stacks with capture rings in a 3D city" width="1200" height="750" class="only-light" />
+        <img src="../img/clayer-dark.webp" alt="Stylized industrial stacks with glowing capture rings in a 3D city at night" width="1200" height="750" class="only-dark" />
+      </figure>
+
+      <div class="cp-body">
+        <section class="cp-sec">
+          <h2>The problem</h2>
+          <p>Cement plants, steel mills and power stations release large amounts of CO<sub>2</sub>. Conventional carbon capture systems help, but they bring their own problems:</p>
+          <ul class="cp-list">
+            <li>They use a lot of energy.</li>
+            <li>Filters need manual maintenance.</li>
+            <li>Changing filters can mean stopping the plant.</li>
+            <li>They can build up backpressure in the stack, which can damage furnaces and halt production.</li>
+          </ul>
+        </section>
+
+        <section class="cp-sec">
+          <h2>The idea</h2>
+          <p>An autonomous filtration unit mounted on the stack. Sensors watch the filters, an AI model predicts when each one will saturate, and a robot swaps it for a fresh one while the plant keeps running.</p>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Four layers</h2>
+          <div class="cp-layers">
+            <div class="card cp-layer"><p class="cp-layer__k">1</p><h3>Pre-filtration</h3><p>Removes dust and large particles from the flue gas first.</p></div>
+            <div class="card cp-layer is-chem"><p class="cp-layer__k">2</p><h3>Chemical absorption</h3><p>MEA bonded to multi-walled carbon nanotubes (MWCNTs) to absorb CO<sub>2</sub>.</p></div>
+            <div class="card cp-layer is-chem"><p class="cp-layer__k">3</p><h3>Chemical absorption</h3><p>A second MEA and CNT stage for the remaining CO<sub>2</sub>.</p></div>
+            <div class="card cp-layer"><p class="cp-layer__k">4</p><h3>Structural support</h3><p>Holds the stack against airflow pressure and heat.</p></div>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>How it is designed to work</h2>
+          <ol class="cp-steps">
+            <li><b>Sense.</b> CO<sub>2</sub>, pressure and temperature sensors read the stack continuously.</li>
+            <li><b>Predict.</b> An NVIDIA Jetson Nano analyses the readings. An LSTM network estimates the remaining useful life of each filter before it fails.</li>
+            <li><b>Swap.</b> When a filter saturates, the robot replaces it. Design target: about 20 seconds, with no shutdown and no human on the stack.</li>
+            <li><b>Regenerate.</b> The used filter moves to a chamber where the plant’s own waste heat releases the captured CO<sub>2</sub> for reuse.</li>
+          </ol>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Engineering choices</h2>
+          <div class="cp-duo">
+            <div class="card cp-mini"><h3>Mechanics</h3><p>NEMA 23 and NEMA 34 stepper motors for torque and precision, linear actuators to push and pull filters, linear guide rails for smooth travel, and a 316L stainless steel frame against heat and corrosion.</p></div>
+            <div class="card cp-mini"><h3>Chemistry</h3><p>Combining MEA with carbon nanotubes is meant to raise absorption efficiency, lower energy use and speed up regeneration. Using waste heat for regeneration targets about 50% less energy than conventional systems.</p></div>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Safety by design</h2>
+          <ul class="cp-list">
+            <li>Built for stack environments up to 870°C.</li>
+            <li>Reflective shields designed to reflect about 95% of radiant heat, plus aerogel insulation.</li>
+            <li>Vortex tube cooling keeps the electronics cool with compressed air.</li>
+            <li>A spring-return bypass damper opens on power loss, so the furnace is protected even if the system fails.</li>
+          </ul>
+        </section>
+
+        <section class="cp-sec">
+          <h2>AI roadmap</h2>
+          <div class="cp-duo">
+            <div class="card cp-mini"><h3>Phase 1</h3><p>Analyse sensor data and monitor performance.</p></div>
+            <div class="card cp-mini"><h3>Phase 2</h3><p>LSTM models predict the remaining useful life (RUL) of each filter.</p></div>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Who it is for, and why it matters</h2>
+          <p>Cement plants, steel and iron works, power stations, industrial zones and environmental agencies. The design supports UN Sustainable Development Goals 7 (clean energy), 9 (industry and innovation), 11 (sustainable cities) and 13 (climate action).</p>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Status</h2>
+          <p>C-Layer is a concept design and research project. A physical prototype has not been built yet because it needs funding. The estimated prototype budget is <b>$4,000 to $6,300</b>, covering motors, sensors, the Jetson Nano, the frame and electronics.</p>
+        </section>
+      </div>
+
+      <a class="card cp-next" href="./salka.html">
+        <span class="section__num">Next project</span>
+        <strong translate="no">SALKA</strong>
+        <span>Adaptive traffic control for Irbid <span data-icon="arrow-right"></span></span>
+      </a>
+    </main>
+
+    <footer class="footer wrap">
+      <p>© 2026 Mohammad H. Malkawi</p>
+      <a href="../">Back to Home <span data-icon="arrow-up"></span></a>
+    </footer>
+    <script type="module" src="/src/page.ts"></script>
+  </body>
+</html>

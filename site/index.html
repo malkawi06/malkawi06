@@ -8,6 +8,36 @@
       name="description"
       content="Mohammad H. Malkawi, Computer Networks and Cybersecurity student at Jadara University in Irbid, Jordan. Adaptive traffic control, autonomous carbon capture and IEEE student leadership."
     />
+    <link rel="canonical" href="https://malkawi06.github.io/malkawi06/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mohammad H. Malkawi" />
+    <meta property="og:title" content="Mohammad H. Malkawi" />
+    <meta property="og:description" content="Computer Networks & Cybersecurity student at Jadara University in Irbid, Jordan. Adaptive traffic control, autonomous carbon capture and IEEE student leadership." />
+    <meta property="og:url" content="https://malkawi06.github.io/malkawi06/" />
+    <meta property="og:image" content="https://malkawi06.github.io/malkawi06/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mohammad H. Malkawi, networks and security student, with a 3D city model" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mohammad H. Malkawi" />
+    <meta name="twitter:description" content="Computer Networks & Cybersecurity student at Jadara University in Irbid, Jordan. Adaptive traffic control, autonomous carbon capture and IEEE student leadership." />
+    <meta name="twitter:image" content="https://malkawi06.github.io/malkawi06/og.png" />
+    <meta name="author" content="Mohammad H. Malkawi" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mohammad H. Malkawi",
+        "url": "https://malkawi06.github.io/malkawi06/",
+        "image": "https://malkawi06.github.io/malkawi06/og.png",
+        "email": "mailto:malkawimohammadh@gmail.com",
+        "jobTitle": "Computer Networks and Cybersecurity Student",
+        "affiliation": { "@type": "CollegeOrUniversity", "name": "Jadara University" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Irbid", "addressCountry": "JO" },
+        "knowsAbout": ["Computer networks", "Cybersecurity", "Traffic simulation", "SUMO", "Python", "Robotics"],
+        "sameAs": ["https://linkedin.com/in/mohammad-h-malkawi-3264b5365", "https://github.com/malkawi06"]
+      }
+    </script>
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f5f5f1" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316161a'/%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='%23f2a516'/%3E%3Crect x='17' y='17' width='8' height='8' rx='2' fill='%23f5f5f1'/%3E%3C/svg%3E" />
@@ -22,7 +52,7 @@
       })();
     </script>
   </head>
-  <body>
+  <body data-root="./">
     <a class="skip" href="#main">Skip to Content</a>
 
     <header class="nav" data-nav>
@@ -39,6 +69,9 @@
           <a href="#contact">Contact</a>
         </nav>
         <div class="nav__actions">
+          <button class="icon-btn" type="button" data-term-open aria-label="Open terminal" title="Terminal (Ctrl K)">
+            <span data-icon="terminal-window"></span>
+          </button>
           <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to dark theme">
             <span data-icon="moon" class="only-light"></span>
             <span data-icon="sun" class="only-dark"></span>
@@ -85,6 +118,7 @@
             <li><a href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365" target="_blank" rel="noopener" aria-label="LinkedIn"><span data-icon="linkedin-logo"></span></a></li>
             <li><a href="mailto:malkawimohammadh@gmail.com" aria-label="Email"><span data-icon="envelope-simple"></span></a></li>
             <li class="hero__status"><span class="dot" aria-hidden="true"></span>Open to internships</li>
+            <li><button class="term-hint" type="button" data-term-open><span data-icon="terminal-window"></span>Try the terminal <kbd>Ctrl K</kbd></button></li>
           </ul>
         </div>
 
@@ -168,6 +202,7 @@
                 </ol>
                 <p class="more__note">Result: up to 15% lower average waiting time, measured in simulation.</p>
               </details>
+              <a class="case-link" href="./projects/salka.html">Read the SALKA case study <span data-icon="arrow-right"></span></a>
             </div>
           </article>
 
@@ -205,8 +240,41 @@
                   <li><b>Fail-safe.</b> A spring-return bypass damper opens on power loss to protect the furnace.</li>
                 </ul>
               </details>
+              <a class="case-link" href="./projects/c-layer.html">Read the C-Layer case study <span data-icon="arrow-right"></span></a>
             </div>
           </article>
+        </div>
+
+        <div class="card demo reveal" data-salka-demo>
+          <div class="demo__copy">
+            <h3>Try the SALKA idea</h3>
+            <p>Same traffic, two controllers. The timer switches every 20 seconds. SALKA follows the queues and clears the way for ambulances.</p>
+          </div>
+          <div class="demo__body">
+            <div class="demo__stage">
+              <canvas width="640" height="440" role="img" aria-label="Top-down view of a four-way intersection with cars queuing at traffic lights"></canvas>
+            </div>
+            <div class="demo__panel">
+              <fieldset class="seg">
+                <legend>Show on the map</legend>
+                <label><input type="radio" name="salka-mode" value="fixed" /><span>Fixed timer</span></label>
+                <label><input type="radio" name="salka-mode" value="adaptive" checked /><span>SALKA</span></label>
+              </fieldset>
+              <div class="demo__stats">
+                <div><span>Fixed timer</span><strong data-out-fixed>0.0 s</strong><em>average wait</em></div>
+                <div class="is-accent"><span>SALKA</span><strong data-out-adaptive>0.0 s</strong><em>average wait</em></div>
+              </div>
+              <p class="demo__gain">In this model: <b data-out-gain>Measuring…</b> across <span data-out-cars>0</span> cars.</p>
+              <label class="check"><input type="checkbox" data-rush /><span>Rush hour</span></label>
+              <div class="demo__btns">
+                <button class="btn btn--primary btn--sm" type="button" data-amb>Send Ambulance</button>
+                <button class="btn btn--secondary btn--sm" type="button" data-play aria-pressed="false">Pause</button>
+                <button class="btn btn--secondary btn--sm" type="button" data-reset>New Traffic</button>
+              </div>
+              <p class="demo__amb" data-out-amb aria-live="polite"></p>
+            </div>
+          </div>
+          <p class="demo__note">An illustrative model running in your browser. SALKA’s real result, up to 15% less waiting, comes from the SUMO simulation of Culture Circle.</p>
         </div>
       </section>
 

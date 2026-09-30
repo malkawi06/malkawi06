@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>SALKA Case Study | Mohammad H. Malkawi</title>
+    <meta name="description" content="SALKA: adaptive traffic control and smart mobility for Irbid, tested on a SUMO digital twin of Culture Circle. Up to 15% less waiting in simulation." />
+    <link rel="canonical" href="https://malkawi06.github.io/malkawi06/projects/salka.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mohammad H. Malkawi" />
+    <meta property="og:title" content="SALKA Case Study | Mohammad H. Malkawi" />
+    <meta property="og:description" content="Adaptive traffic control and smart mobility for Irbid, tested on a SUMO digital twin of Culture Circle. Up to 15% less waiting in simulation." />
+    <meta property="og:url" content="https://malkawi06.github.io/malkawi06/projects/salka.html" />
+    <meta property="og:image" content="https://malkawi06.github.io/malkawi06/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mohammad H. Malkawi, networks and security student, with a 3D city model" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SALKA Case Study | Mohammad H. Malkawi" />
+    <meta name="twitter:description" content="Adaptive traffic control and smart mobility for Irbid, tested on a SUMO digital twin of Culture Circle. Up to 15% less waiting in simulation." />
+    <meta name="twitter:image" content="https://malkawi06.github.io/malkawi06/og.png" />
+    <meta name="author" content="Mohammad H. Malkawi" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f5f1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316161a'/%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='%23f2a516'/%3E%3Crect x='17' y='17' width='8' height='8' rx='2' fill='%23f5f5f1'/%3E%3C/svg%3E" />
+    <script>
+      (function () {
+        var d = document.documentElement, t, h = d.getAttribute("data-theme");
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") t = h === "light" || h === "dark" ? h : null;
+        if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        d.setAttribute("data-theme", t);
+        d.classList.add("js");
+      })();
+    </script>
+  </head>
+  <body data-root="../">
+    <a class="skip" href="#main">Skip to Content</a>
+    <header class="nav" data-nav>
+      <div class="nav__inner wrap">
+        <a class="brand" href="../" aria-label="Mohammad H. Malkawi, home">
+          <span class="brand__mark" aria-hidden="true"><i></i><i></i></span>
+          <span translate="no">Malkawi</span>
+        </a>
+        <nav class="nav__links" aria-label="Sections">
+          <a href="../#about">About</a>
+          <a href="../#projects">Projects</a>
+          <a href="../#leadership">Leadership</a>
+          <a href="../#toolkit">Toolkit</a>
+          <a href="../#contact">Contact</a>
+        </nav>
+        <div class="nav__actions">
+          <button class="icon-btn" type="button" data-term-open aria-label="Open terminal" title="Terminal (Ctrl K)"><span data-icon="terminal-window"></span></button>
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to dark theme">
+            <span data-icon="moon" class="only-light"></span>
+            <span data-icon="sun" class="only-dark"></span>
+          </button>
+          <a class="btn btn--primary btn--sm nav__cta" href="mailto:malkawimohammadh@gmail.com">Email Me</a>
+          <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+            <span data-icon="list" class="menu-open"></span>
+            <span data-icon="x" class="menu-close"></span>
+          </button>
+        </div>
+      </div>
+      <nav class="menu wrap" id="menu" data-menu hidden aria-label="Sections">
+        <a href="../#about">About</a>
+        <a href="../#projects">Projects</a>
+        <a href="../#leadership">Leadership</a>
+        <a href="../#toolkit">Toolkit</a>
+        <a href="../#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main" class="wrap casepage">
+      <a class="back" href="../#projects"><span data-icon="arrow-left"></span>All projects</a>
+
+      <header class="cp-head">
+        <div class="cp-head__copy">
+          <p class="section__num">Case study <span>Smart mobility</span></p>
+          <h1 translate="no">SALKA</h1>
+          <p class="cp-lede">An adaptive traffic control and smart mobility framework for Irbid, tested on a digital twin of Culture Circle.</p>
+          <ul class="cp-chips">
+            <li class="chip">Self-initiated</li>
+            <li class="chip">Team <span translate="no">&nbsp;SYNTRA</span></li>
+            <li class="chip">My role: system design &amp; research</li>
+          </ul>
+        </div>
+        <div class="card cp-stat">
+          <p class="cp-stat__num">15%</p>
+          <p>Up to 15% lower average vehicle waiting time, measured in the SUMO simulation.</p>
+        </div>
+      </header>
+
+      <figure class="card cp-media">
+        <img src="../img/salka-light.webp" alt="Stylized 3D city around a roundabout with traffic flowing" width="1200" height="750" class="only-light" />
+        <img src="../img/salka-dark.webp" alt="Stylized 3D city at night around a roundabout with traffic light trails" width="1200" height="750" class="only-dark" />
+      </figure>
+
+      <div class="cp-body">
+        <section class="cp-sec">
+          <h2>The problem</h2>
+          <p>Traffic congestion is one of the biggest urban challenges in Jordan. Vehicle ownership keeps growing, public transport is underused, and most signals still run on fixed schedules.</p>
+          <ul class="cp-list">
+            <li>Traffic lights follow fixed timers regardless of real demand.</li>
+            <li>Congestion at one major intersection cascades into the roads around it.</li>
+            <li>Emergency vehicles lose time at congested junctions.</li>
+            <li>Navigation apps can spot congestion, but they cannot change how the infrastructure behaves.</li>
+          </ul>
+        </section>
+
+        <section class="cp-sec">
+          <h2>The approach</h2>
+          <p>SALKA works at the infrastructure level, not just the route level. It has two goals:</p>
+          <div class="cp-duo">
+            <div class="card cp-mini"><h3>Intelligent traffic management</h3><p>Analyse conditions at major intersections and adjust signal timing to cut queues and waiting times.</p></div>
+            <div class="card cp-mini"><h3>Smart mobility services</h3><p>Give citizens route suggestions, arrival estimates, bus tracking and traffic alerts.</p></div>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>System architecture</h2>
+          <p>Three layers, from raw data to the people who use it.</p>
+          <div class="cp-layers">
+            <div class="card cp-layer"><p class="cp-layer__k">Layer 3</p><h3>User layer</h3><p>A citizen app for routes, bus tracking, arrival times and alerts. A dashboard for operators with live monitoring, congestion heatmaps, signal status and analytics.</p></div>
+            <div class="card cp-layer"><p class="cp-layer__k">Layer 2</p><h3>Intelligence &amp; processing</h3><p>Traffic analysis of density, queues and waiting times. Adaptive signal control for priority, green duration and phase changes. Route optimization and data fusion into one view of the network.</p></div>
+            <div class="card cp-layer"><p class="cp-layer__k">Layer 1</p><h3>Data collection</h3><p>Intersection cameras, vehicle counts and queue lengths. Bus GPS and schedules. SUMO simulation output. Ambulance priority requests.</p></div>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Why Culture Circle</h2>
+          <p>The pilot area in Irbid concentrates the problems found across Jordanian cities: high traffic density, several intersecting flows, heavy public transport activity, peak-hour congestion and strategic importance in the city.</p>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Building the prototype in SUMO</h2>
+          <ol class="cp-steps">
+            <li><b>Digital twin.</b> The Culture Circle road network was extracted from OpenStreetMap, imported into SUMO, and its signals and intersections configured.</li>
+            <li><b>Traffic generation.</b> Realistic scenarios with private cars, public buses, peak hours and congestion events.</li>
+            <li><b>Traffic analysis.</b> Python and TraCI collect vehicle counts, queue lengths, waiting times and occupancy while the simulation runs.</li>
+            <li><b>Adaptive control.</b> Green phases stretch for congested approaches, waiting drops, and emergency vehicles get priority.</li>
+          </ol>
+        </section>
+
+        <section class="cp-sec cp-sec--wide">
+          <div class="card demo" data-salka-demo>
+            <div class="demo__copy">
+              <h3>Try the idea</h3>
+              <p>Same traffic, two controllers. The timer switches every 20 seconds. SALKA follows the queues and clears the way for ambulances.</p>
+            </div>
+            <div class="demo__body">
+              <div class="demo__stage">
+                <canvas width="640" height="440" role="img" aria-label="Top-down view of a four-way intersection with cars queuing at traffic lights"></canvas>
+              </div>
+              <div class="demo__panel">
+                <fieldset class="seg">
+                  <legend>Show on the map</legend>
+                  <label><input type="radio" name="salka-mode" value="fixed" /><span>Fixed timer</span></label>
+                  <label><input type="radio" name="salka-mode" value="adaptive" checked /><span>SALKA</span></label>
+                </fieldset>
+                <div class="demo__stats">
+                  <div><span>Fixed timer</span><strong data-out-fixed>0.0 s</strong><em>average wait</em></div>
+                  <div class="is-accent"><span>SALKA</span><strong data-out-adaptive>0.0 s</strong><em>average wait</em></div>
+                </div>
+                <p class="demo__gain">In this model: <b data-out-gain>Measuring…</b> across <span data-out-cars>0</span> cars.</p>
+                <label class="check"><input type="checkbox" data-rush /><span>Rush hour</span></label>
+                <div class="demo__btns">
+                  <button class="btn btn--primary btn--sm" type="button" data-amb>Send Ambulance</button>
+                  <button class="btn btn--secondary btn--sm" type="button" data-play aria-pressed="false">Pause</button>
+                  <button class="btn btn--secondary btn--sm" type="button" data-reset>New Traffic</button>
+                </div>
+                <p class="demo__amb" data-out-amb aria-live="polite"></p>
+              </div>
+            </div>
+            <p class="demo__note">An illustrative model running in your browser. The real result, up to 15% less waiting, comes from the SUMO simulation of Culture Circle.</p>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>What gets measured</h2>
+          <div class="cp-grid4">
+            <div class="card cp-mini"><h3>Traffic</h3><p>Average travel time, average waiting time, queue length, throughput.</p></div>
+            <div class="card cp-mini"><h3>Environment</h3><p>Fuel consumption and CO<sub>2</sub> emissions.</p></div>
+            <div class="card cp-mini"><h3>Public transport</h3><p>Route efficiency and bus travel time reliability.</p></div>
+            <div class="card cp-mini"><h3>Emergency response</h3><p>Delay reduction for emergency vehicles.</p></div>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Who it is designed for</h2>
+          <p>Transport authorities and municipalities such as the Ministry of Transport and Greater Irbid Municipality, bus and future BRT operators, ride-hailing services, and everyday commuters, students and visitors.</p>
+        </section>
+
+        <section class="cp-sec">
+          <h2>How we worked</h2>
+          <p>An Agile process in five phases: requirements and planning, system design, development with SUMO integration, testing against the KPIs, then evaluation and a scaling roadmap. The architecture is built to grow from one intersection to many intersections and cities.</p>
+        </section>
+      </div>
+
+      <a class="card cp-next" href="./c-layer.html">
+        <span class="section__num">Next project</span>
+        <strong translate="no">C-Layer</strong>
+        <span>Autonomous CO<sub>2</sub> capture for heavy industry <span data-icon="arrow-right"></span></span>
+      </a>
+    </main>
+
+    <footer class="footer wrap">
+      <p>© 2026 Mohammad H. Malkawi</p>
+      <a href="../">Back to Home <span data-icon="arrow-up"></span></a>
+    </footer>
+    <script type="module" src="/src/page.ts"></script>
+  </body>
+</html>

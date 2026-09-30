@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://malkawi06.github.io/malkawi06/sitemap.xml
