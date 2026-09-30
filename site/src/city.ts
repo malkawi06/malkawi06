@@ -80,7 +80,7 @@ const PALETTES: Record<Theme, Palette> = {
     smoke: "#3a3026",
     ring: "#ffb13b",
     light: 0,
-    bloom: 0.62,
+    bloom: 0.5,
   },
   light: {
     sky: "#dfe2e3",
@@ -630,7 +630,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
     let type: number;
     let coord: number;
     let dir = rand() < 0.5 ? -1 : 1;
-    if (r < 0.06) {
+    if (r < 0.035) {
       type = 2;
       coord = RING_R + (dir > 0 ? 0.32 : -0.32);
     } else {

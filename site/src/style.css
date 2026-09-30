@@ -327,7 +327,7 @@ main,
   border-bottom: 1px solid transparent;
 }
 .nav.is-scrolled {
-  background: color-mix(in oklab, var(--bg) 72%, transparent);
+  background: color-mix(in oklab, var(--bg) 90%, transparent);
   backdrop-filter: blur(16px) saturate(1.2);
   border-bottom-color: var(--line);
 }
@@ -772,8 +772,7 @@ main,
 .chapter::before {
   content: "";
   position: absolute;
-  inset: auto 0 0 0;
-  height: 55%;
+  inset: 30% 0 0 0;
   z-index: -1;
   background: linear-gradient(0deg, color-mix(in oklab, var(--bg) 75%, transparent), transparent);
   pointer-events: none;
@@ -792,6 +791,21 @@ main,
 }
 .chapter--right .wrap {
   text-align: right;
+}
+
+
+/* Section scrims fade out at both edges so neighbouring sections blend without seams */
+.hero::before,
+.profile::before,
+.chapter::before,
+.lead-hero::before,
+.contact::before {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+.hero::before {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 75%, transparent 100%);
 }
 
 /* ---------- Case studies ---------- */
