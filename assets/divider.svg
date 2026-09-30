@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="24" viewBox="0 0 1200 24">
+  <defs>
+    <linearGradient id="line" x1="0" x2="1">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#22d3ee" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="dot">
+      <stop offset="0" stop-color="#a5f3fc"/>
+      <stop offset=".4" stop-color="#22d3ee" stop-opacity=".6"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="0" y="11.5" width="1200" height="1" fill="url(#line)"/>
+  <circle cx="600" cy="12" r="3.5" fill="#0b1626" stroke="#22d3ee" stroke-opacity=".7"/>
+  <ellipse cy="12" rx="36" ry="5" fill="url(#dot)">
+    <animate attributeName="cx" values="-40;1240" dur="5s" repeatCount="indefinite"/>
+  </ellipse>
+</svg>
