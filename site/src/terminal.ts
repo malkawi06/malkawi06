@@ -1,36 +1,24 @@
 /*
-  A small terminal that answers a few commands about Mohammad. Opens from the
-  nav button, the hero link, or with Ctrl+K / Cmd+K. Built on <dialog> so focus
-  and Escape work the way assistive tech expects.
+  The site's terminal. One set of commands drives two views: the dialog that
+  opens from the nav or with Ctrl+K / Cmd+K, and the live terminal in the home
+  hero that types a short introduction and then takes commands.
 */
 
 type Line = { text: string; kind?: "cmd" | "ok" | "err" | "dim"; href?: string };
 
-export function mountTerminal(root: string, onTheme: () => void) {
-  const dlg = document.createElement("dialog");
-  dlg.className = "term";
-  dlg.setAttribute("aria-labelledby", "term-title");
-  dlg.innerHTML = `
-    <div class="term__bar">
-      <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-      <p id="term-title">malkawi@portfolio: ~</p>
-      <button type="button" class="term__close" data-term-close aria-label="Close terminal">Esc</button>
-    </div>
-    <div class="term__out" data-term-out aria-live="polite"></div>
-    <form class="term__form" data-term-form>
-      <label for="term-in" class="term__prompt">$</label>
-      <input id="term-in" name="command" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type help…" />
-    </form>`;
-  document.body.appendChild(dlg);
+type ShellOptions = {
+  root: string;
+  onTheme: () => void;
+  out: HTMLElement;
+  /** Called before the terminal moves the page (the dialog closes itself). */
+  beforeNav?: () => void;
+  /** What `exit` does in this view. */
+  onExit: () => void;
+};
 
-  const out = dlg.querySelector<HTMLElement>("[data-term-out]")!;
-  const form = dlg.querySelector<HTMLFormElement>("[data-term-form]")!;
-  const input = dlg.querySelector<HTMLInputElement>("#term-in")!;
-  const history: string[] = [];
-  let hIndex = 0;
-
+function createShell({ root, onTheme, out, beforeNav, onExit }: ShellOptions) {
   const go = (hash: string) => {
-    dlg.close();
+    beforeNav?.();
     // scroll when the section is on this page, otherwise open it on the home page
     const target = document.querySelector(hash);
     if (target) target.scrollIntoView({ behavior: "smooth" });
@@ -89,6 +77,10 @@ export function mountTerminal(root: string, onTheme: () => void) {
         { text: "systems   SUMO, TraCI, LSTM models, NVIDIA Jetson, Arduino" },
         { text: "tooling   Git, GitHub, Docker, OpenStreetMap data" },
       ],
+    },
+    status: {
+      help: "am I available",
+      run: () => [{ text: "● Open to internships, remote or in Jordan.", kind: "ok" }],
     },
     contact: {
       help: "how to reach me",
@@ -166,13 +158,25 @@ export function mountTerminal(root: string, onTheme: () => void) {
       return;
     }
     if (key === "exit") {
-      dlg.close();
+      onExit();
       return;
     }
     const c = COMMANDS[key];
     print(c ? c.run(args) : [{ text: `command not found: ${cmd}. Type help.`, kind: "err" }]);
   }
 
+  const complete = (value: string) => {
+    const match = Object.keys(COMMANDS).filter((k) => k.startsWith(value.trim().toLowerCase()));
+    return match.length === 1 ? match[0] : value;
+  };
+
+  return { run, print, complete };
+}
+
+/** Enter runs, arrow keys walk the history, Tab completes. */
+function wireInput(form: HTMLFormElement, input: HTMLInputElement, shell: ReturnType<typeof createShell>) {
+  const history: string[] = [];
+  let hIndex = 0;
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const v = input.value;
@@ -181,7 +185,7 @@ export function mountTerminal(root: string, onTheme: () => void) {
       hIndex = history.length;
     }
     input.value = "";
-    run(v);
+    shell.run(v);
   });
   input.addEventListener("keydown", (e) => {
     if (e.key === "ArrowUp" && hIndex > 0) {
@@ -192,15 +196,40 @@ export function mountTerminal(root: string, onTheme: () => void) {
       hIndex = Math.min(history.length, hIndex + 1);
       input.value = history[hIndex] ?? "";
       e.preventDefault();
-    } else if (e.key === "Tab") {
-      const match = Object.keys(COMMANDS).filter((k) => k.startsWith(input.value.trim().toLowerCase()));
-      if (match.length === 1) input.value = match[0];
+    } else if (e.key === "Tab" && input.value.trim()) {
+      input.value = shell.complete(input.value);
       e.preventDefault();
     }
   });
-  dlg.querySelector("[data-term-close]")!.addEventListener("click", () => dlg.close());
+}
+
+export function mountTerminal(root: string, onTheme: () => void) {
+  const dlg = document.createElement("dialog");
+  dlg.className = "term";
+  dlg.setAttribute("aria-labelledby", "term-title");
+  dlg.innerHTML = `
+    <div class="term__bar">
+      <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <p id="term-title">malkawi@portfolio: ~</p>
+      <button type="button" class="term__close" data-term-close aria-label="Close terminal">Esc</button>
+    </div>
+    <div class="term__out" data-term-out aria-live="polite"></div>
+    <form class="term__form" data-term-form>
+      <label for="term-in" class="term__prompt">$</label>
+      <input id="term-in" name="command" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type help…" />
+    </form>`;
+  document.body.appendChild(dlg);
+
+  const out = dlg.querySelector<HTMLElement>("[data-term-out]")!;
+  const form = dlg.querySelector<HTMLFormElement>("[data-term-form]")!;
+  const input = dlg.querySelector<HTMLInputElement>("#term-in")!;
+  const close = () => dlg.close();
+  const shell = createShell({ root, onTheme, out, beforeNav: close, onExit: close });
+  wireInput(form, input, shell);
+
+  dlg.querySelector("[data-term-close]")!.addEventListener("click", close);
   dlg.addEventListener("click", (e) => {
-    if (e.target === dlg) dlg.close();
+    if (e.target === dlg) close();
   });
 
   let greeted = false;
@@ -208,7 +237,7 @@ export function mountTerminal(root: string, onTheme: () => void) {
     if (!dlg.open) dlg.showModal();
     if (!greeted) {
       greeted = true;
-      print([
+      shell.print([
         { text: "Welcome. This terminal knows a few things about me.", kind: "ok" },
         { text: "Try whoami, projects, skills, contact or help.", kind: "dim" },
       ]);
@@ -220,8 +249,96 @@ export function mountTerminal(root: string, onTheme: () => void) {
   document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();
-      if (dlg.open) dlg.close();
+      if (dlg.open) close();
       else open();
     }
   });
+}
+
+/**
+ * The hero terminal. Its introduction is plain HTML, so it reads fine without
+ * JavaScript; with motion allowed, the commands are typed out once it is on screen.
+ */
+export function mountHeroTerminal(el: HTMLElement, root: string, onTheme: () => void, reducedMotion: boolean) {
+  const out = el.querySelector<HTMLElement>("[data-hterm-out]")!;
+  const form = el.querySelector<HTMLFormElement>("[data-hterm-form]")!;
+  const input = el.querySelector<HTMLInputElement>("input")!;
+  const shell = createShell({
+    root,
+    onTheme,
+    out,
+    onExit: () => shell.print([{ text: "This one lives on the page, so it stays open.", kind: "dim" }]),
+  });
+  wireInput(form, input, shell);
+
+  // clicking anywhere in the window focuses the prompt, unless the reader is selecting or following a link
+  el.addEventListener("click", (e) => {
+    if ((e.target as Element).closest("a, button, input")) return;
+    if (window.getSelection()?.toString()) return;
+    input.focus({ preventScroll: true });
+  });
+
+  const lines = Array.from(el.querySelectorAll<HTMLElement>("[data-hterm-intro] > p"));
+  if (reducedMotion || !lines.length) return;
+
+  let timer = 0;
+  let done = false;
+  const cmdText = new Map<HTMLElement, string>();
+  lines.forEach((l) => {
+    const c = l.querySelector<HTMLElement>(".c");
+    if (c) cmdText.set(c, c.textContent ?? "");
+    l.hidden = true;
+  });
+  el.classList.add("is-typing");
+
+  const finish = () => {
+    if (done) return;
+    done = true;
+    window.clearTimeout(timer);
+    lines.forEach((l) => {
+      l.hidden = false;
+      l.classList.remove("is-active");
+    });
+    cmdText.forEach((text, c) => (c.textContent = text));
+    el.classList.remove("is-typing");
+    out.scrollTop = out.scrollHeight;
+  };
+
+  let i = 0;
+  const next = () => {
+    if (done) return;
+    if (i >= lines.length) return finish();
+    const line = lines[i++];
+    line.hidden = false;
+    out.scrollTop = out.scrollHeight;
+    const c = line.querySelector<HTMLElement>(".c");
+    if (!c) {
+      timer = window.setTimeout(next, 110);
+      return;
+    }
+    const full = cmdText.get(c) ?? "";
+    c.textContent = "";
+    line.classList.add("is-active");
+    let k = 0;
+    const type = () => {
+      if (done) return;
+      c.textContent = full.slice(0, ++k);
+      if (k < full.length) timer = window.setTimeout(type, 45 + Math.random() * 45);
+      else {
+        line.classList.remove("is-active");
+        timer = window.setTimeout(next, 280);
+      }
+    };
+    timer = window.setTimeout(type, 320);
+  };
+
+  // anyone who starts typing gets the full intro at once
+  input.addEventListener("focus", finish, { once: true });
+
+  const io = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return;
+    io.disconnect();
+    timer = window.setTimeout(next, 500);
+  });
+  io.observe(el);
 }

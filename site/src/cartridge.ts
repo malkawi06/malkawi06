@@ -18,7 +18,7 @@ import {
   BoxGeometry,
 } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import type { Theme } from "./city";
+import type { Theme } from "./theme";
 
 /*
   The C-Layer filter cartridge: four stacked layers. Every few seconds the robot

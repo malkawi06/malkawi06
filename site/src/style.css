@@ -446,8 +446,7 @@ img {
     transform: none;
     transition: none;
   }
-  .btn,
-  .hero__art {
+  .btn {
     transition: none;
   }
 }
@@ -529,58 +528,83 @@ img {
   color: var(--muted);
 }
 
-/* 3D scene */
-.hero__art {
-  position: relative;
-  aspect-ratio: 1 / 0.9;
-  max-width: 100%;
+/* Hero terminal: dark in both themes, like a real one */
+.hero__term {
   min-width: 0;
-  transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: transform 0.6s var(--ease);
 }
-.frame {
-  position: absolute;
-  margin: 0;
-  background: var(--surface);
+.hterm {
+  display: flex;
+  flex-direction: column;
+  height: clamp(360px, 52vh, 460px);
   border: 1.5px solid var(--edge);
-  border-radius: 20px;
+  border-radius: 18px;
   box-shadow: 6px 6px 0 var(--shadow);
+  background: #141416;
+  color: #e8e8e3;
+  font-family: var(--mono);
+  font-size: 0.9rem;
   overflow: hidden;
+  cursor: text;
 }
-.frame canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  touch-action: pan-y;
+.hterm .term__bar p {
+  font-size: 0.8rem;
 }
-.frame figcaption {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--surface) 88%, transparent);
-  border: 1px solid var(--line);
+.hterm__hint {
+  color: #7d7d85;
   font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--ink-2);
-  pointer-events: none;
 }
-.frame--city {
-  inset: 0 12px 12px 0;
-  transform: rotate(-1deg);
+.hterm__hint kbd {
+  padding: 1px 6px;
+  border: 1px solid #3a3a40;
+  border-radius: 5px;
+  background: transparent;
+  font-family: inherit;
+  color: #c9c9c3;
 }
-.frame--city canvas {
-  cursor: grab;
+.hterm__out {
+  padding: 18px 20px 8px;
+  line-height: 1.65;
 }
-.frame--city canvas:active {
-  cursor: grabbing;
+.hterm__intro {
+  display: grid;
+  gap: 4px;
 }
-.no-webgl .frame canvas {
-  display: none;
+.hterm__intro .is-cmd:first-child {
+  margin-top: 0;
+}
+.hterm__p {
+  color: #f2a516;
+}
+.hterm .dot {
+  display: inline-block;
+  vertical-align: 0.05em;
+  margin-right: 4px;
+}
+/* the block cursor follows whatever is being typed */
+.hterm .is-active .c::after {
+  content: "";
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 2px;
+  vertical-align: -0.2em;
+  background: #f2a516;
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+.hterm .term__form {
+  padding: 12px 20px 16px;
+  border-top: 1px solid #242428;
+}
+.hterm .term__form input {
+  caret-color: #f2a516;
+}
+.hterm:focus-within {
+  border-color: var(--accent);
 }
 
 @media (max-width: 960px) {
@@ -589,12 +613,24 @@ img {
     min-height: auto;
     padding-top: 32px;
   }
-  .hero__art {
-    width: min(640px, 100%);
-    margin: 12px auto 0;
+  .hero__term {
+    margin-top: 8px;
+  }
+  .hterm {
+    height: clamp(360px, 62vh, 440px);
   }
 }
 @media (max-width: 520px) {
+  .hterm {
+    font-size: 0.8rem;
+  }
+  .hterm__out {
+    padding: 14px 16px 6px;
+    line-height: 1.55;
+  }
+  .hterm .term__form {
+    padding: 10px 16px 14px;
+  }
   .hero__ctas .btn {
     flex: 1 1 100%;
   }
@@ -603,9 +639,6 @@ img {
     padding-left: 0;
     border-left: 0;
     width: 100%;
-  }
-  .frame figcaption {
-    font-size: 0.7rem;
   }
 }
 
@@ -1358,45 +1391,29 @@ img {
 }
 
 /* ---------- Intro ---------- */
-.js .hero__art .frame {
+.js .hero__term {
   opacity: 0;
-  translate: 0 28px;
-  scale: 0.94;
-  transition: opacity 0.7s var(--ease), translate 0.9s var(--ease), scale 0.9s var(--ease);
+  translate: 0 24px;
+  transition:
+    opacity 0.7s var(--ease) 0.15s,
+    translate 0.9s var(--ease) 0.15s;
 }
-.is-loaded .hero__art .frame {
+.is-loaded .hero__term {
   opacity: 1;
   translate: none;
-  scale: 1;
 }
 @media (prefers-reduced-motion: reduce) {
-  .js .hero__art .frame {
+  .js .hero__term {
     opacity: 1;
     translate: none;
-    scale: 1;
     transition: none;
+  }
+  .hterm .is-active .c::after {
+    animation: none;
   }
 }
 
 /* ---------- Terminal hint and links ---------- */
-.term-hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px dashed var(--line);
-  background: transparent;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-}
-.term-hint:hover {
-  color: var(--ink);
-  border-color: var(--ink);
-}
 kbd {
   padding: 1px 6px;
   border-radius: 5px;

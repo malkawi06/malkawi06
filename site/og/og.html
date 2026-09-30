@@ -24,11 +24,19 @@
       .hl { background: linear-gradient(transparent 68%, rgba(242,165,22,.5) 68%); }
       .tags { margin-top: 34px; display: flex; gap: 12px; flex-wrap: wrap; }
       .tags span { padding: 8px 16px; border-radius: 999px; border: 2px solid #16161a; background: #fff; font-family: "JetBrains Mono Variable", monospace; font-size: 18px; box-shadow: 3px 3px 0 #16161a; }
-      .frame { position: absolute; right: 64px; top: 70px; width: 470px; height: 440px; border: 2.5px solid #16161a; border-radius: 26px; box-shadow: 9px 9px 0 #16161a; overflow: hidden; transform: rotate(2deg); background: #fff; }
-      .frame img { width: 100%; height: 100%; object-fit: cover; }
-      .stat { position: absolute; right: 360px; bottom: 58px; padding: 16px 22px; border: 2.5px solid #16161a; border-radius: 18px; background: #f2a516; box-shadow: 6px 6px 0 #16161a; transform: rotate(-3deg); }
-      .stat b { display: block; font-family: "Bricolage Grotesque Variable", sans-serif; font-size: 44px; line-height: 1; letter-spacing: -0.04em; }
-      .stat span { font-size: 17px; font-weight: 700; }
+      .term { position: absolute; right: 64px; top: 92px; width: 480px; border: 2.5px solid #16161a; border-radius: 22px; box-shadow: 9px 9px 0 #16161a; overflow: hidden; transform: rotate(2deg); background: #141416; color: #e8e8e3; font-family: "JetBrains Mono Variable", monospace; }
+      .bar { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: #1b1b1e; border-bottom: 1px solid #2a2a2e; font-size: 17px; color: #9a9aa2; }
+      .dots { display: flex; gap: 8px; }
+      .dots i { width: 14px; height: 14px; border-radius: 50%; background: #3a3a40; }
+      .dots i:first-child { background: #f2a516; }
+      .body { padding: 24px 26px 30px; font-size: 21px; line-height: 1.75; }
+      .body p { margin: 0; }
+      .cmd { color: #f6c46a; }
+      .cmd + p, .gap { margin-top: 2px; }
+      .ok { color: #7fdc9f; }
+      .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #5fcf8b; margin-right: 10px; vertical-align: 1px; }
+      .sp { margin-top: 12px !important; }
+      .caret { display: inline-block; width: 12px; height: 24px; background: #f2a516; vertical-align: -4px; margin-left: 4px; }
       .url { position: absolute; left: 72px; bottom: 56px; font-family: "JetBrains Mono Variable", monospace; font-size: 20px; color: #676770; }
     </style>
   </head>
@@ -37,10 +45,19 @@
       <div class="mark"><i></i><i></i></div>
       <h1>Mohammad H. Malkawi</h1>
       <p class="role">Networks &amp; security student building <span class="hl">smarter infrastructure</span></p>
-      <div class="tags"><span>SALKA</span><span>C-Layer</span><span>IEEE Jadara</span></div>
+      <div class="tags"><span>Networking</span><span>Security</span><span>IEEE Jadara</span></div>
     </div>
-    <div class="frame"><img src="../public/img/salka-light.webp" alt="" /></div>
-    <div class="stat"><b>15%</b><span>less waiting in simulation</span></div>
+    <div class="term">
+      <div class="bar"><span class="dots"><i></i><i></i><i></i></span>malkawi@portfolio: ~</div>
+      <div class="body">
+        <p class="cmd">$ whoami</p>
+        <p class="ok">Mohammad H. Malkawi</p>
+        <p>Networks &amp; security student</p>
+        <p class="cmd sp">$ status</p>
+        <p><span class="dot"></span>Open to internships</p>
+        <p class="cmd sp">$<span class="caret"></span></p>
+      </div>
+    </div>
     <p class="url">malkawi06.github.io/malkawi06</p>
   </body>
 </html>

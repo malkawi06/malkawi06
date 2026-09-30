@@ -17,7 +17,7 @@
     <meta property="og:image" content="https://malkawi06.github.io/malkawi06/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Mohammad H. Malkawi, networks and security student, with a 3D city model" />
+    <meta property="og:image:alt" content="Mohammad H. Malkawi, networks and security student, next to a terminal window" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Mohammad H. Malkawi" />
     <meta name="twitter:description" content="Computer Networks & Cybersecurity student at Jadara University in Irbid, Jordan. Adaptive traffic control, autonomous carbon capture and IEEE student leadership." />
@@ -118,15 +118,33 @@
             <li><a href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365" target="_blank" rel="noopener" aria-label="LinkedIn"><span data-icon="linkedin-logo"></span></a></li>
             <li><a href="mailto:malkawimohammadh@gmail.com" aria-label="Email"><span data-icon="envelope-simple"></span></a></li>
             <li class="hero__status"><span class="dot" aria-hidden="true"></span>Open to internships</li>
-            <li><button class="term-hint" type="button" data-term-open><span data-icon="terminal-window"></span>Try the terminal <kbd>Ctrl K</kbd></button></li>
           </ul>
         </div>
 
-        <div class="hero__art" data-tilt>
-          <figure class="frame frame--city">
-            <canvas data-city-canvas role="img" aria-label="3D model of a small city with data links running between the rooftops"></canvas>
-            <figcaption><span data-icon="hand-grabbing"></span>Drag to rotate</figcaption>
-          </figure>
+        <div class="hero__term">
+          <div class="hterm" data-hero-term>
+            <div class="term__bar">
+              <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <p>malkawi@portfolio: ~</p>
+              <span class="hterm__hint" aria-hidden="true">type <kbd>help</kbd></span>
+            </div>
+            <div class="term__out hterm__out" data-hterm-out aria-live="polite">
+              <div class="hterm__intro" data-hterm-intro>
+                <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">whoami</span></p>
+                <p class="is-ok">Mohammad H. Malkawi</p>
+                <p>Networks &amp; security student at Jadara University, Irbid</p>
+                <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">status</span></p>
+                <p><span class="dot" aria-hidden="true"></span> Open to internships, remote or in Jordan</p>
+                <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">cat focus.txt</span></p>
+                <p>Networking · Security · Systems that work in the real world</p>
+                <p class="is-dim">Type help to see what else I can tell you.</p>
+              </div>
+            </div>
+            <form class="term__form" data-hterm-form>
+              <label for="hterm-in" class="term__prompt">$</label>
+              <input id="hterm-in" name="command" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help" aria-label="Type a terminal command" />
+            </form>
+          </div>
         </div>
       </section>
 

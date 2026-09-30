@@ -1,32 +1,10 @@
-import { root, reducedMotion, finePointer, currentTheme, themeListeners, idle } from "./common";
+import { reducedMotion, siteRoot, toggleTheme } from "./common";
+import { mountHeroTerminal } from "./terminal";
 import { mountSalkaDemo } from "./salka-demo";
 
-/* ---------- Hero tilt ---------- */
-const art = document.querySelector<HTMLElement>("[data-tilt]");
-if (art && finePointer && !reducedMotion) {
-  const hero = art.closest("section")!;
-  let pending = false;
-  let px = 0;
-  let py = 0;
-  hero.addEventListener("pointermove", (e) => {
-    px = e.clientX;
-    py = e.clientY;
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(() => {
-      pending = false;
-      const r = art.getBoundingClientRect();
-      const x = (px - (r.left + r.width / 2)) / r.width;
-      const y = (py - (r.top + r.height / 2)) / r.height;
-      art.style.setProperty("--ry", `${(x * 5).toFixed(2)}deg`);
-      art.style.setProperty("--rx", `${(-y * 4).toFixed(2)}deg`);
-    });
-  });
-  hero.addEventListener("pointerleave", () => {
-    art.style.setProperty("--ry", "0deg");
-    art.style.setProperty("--rx", "0deg");
-  });
-}
+/* ---------- Hero terminal ---------- */
+const heroTerm = document.querySelector<HTMLElement>("[data-hero-term]");
+if (heroTerm) mountHeroTerminal(heroTerm, siteRoot, toggleTheme, reducedMotion);
 
 /* ---------- Leadership timeline ---------- */
 // the line fills and each node lights up once it passes 60% of the viewport height
@@ -61,55 +39,3 @@ if (tl) {
 /* ---------- SALKA demo ---------- */
 const demo = document.querySelector<HTMLElement>("[data-salka-demo]");
 if (demo) mountSalkaDemo(demo);
-
-/* ---------- 3D frames ---------- */
-async function init3D() {
-  const cityCanvas = document.querySelector<HTMLCanvasElement>("[data-city-canvas]");
-  if (!cityCanvas) return;
-  const { createCity, webglAvailable } = await import("./city");
-  if (!webglAvailable()) {
-    root.classList.add("no-webgl");
-    return;
-  }
-
-  const city = createCity({ canvas: cityCanvas, theme: currentTheme(), reducedMotion, lowPower: true, compact: true, maxFps: 30, network: true });
-  city.setOrbit({ cx: 0, cz: -2, radius: 56, height: 44, speed: 0.06, ty: 2 });
-  themeListeners.push((t) => city.setTheme(t));
-
-  // drag or use the arrow keys to rotate the city model
-  let dragX: number | null = null;
-  cityCanvas.addEventListener("pointerdown", (e) => {
-    dragX = e.clientX;
-    cityCanvas.setPointerCapture(e.pointerId);
-  });
-  cityCanvas.addEventListener("pointermove", (e) => {
-    if (dragX === null) return;
-    city.turn((e.clientX - dragX) * -0.008);
-    dragX = e.clientX;
-  });
-  const endDrag = () => (dragX = null);
-  cityCanvas.addEventListener("pointerup", endDrag);
-  cityCanvas.addEventListener("pointercancel", endDrag);
-  cityCanvas.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") city.turn(0.15);
-    if (e.key === "ArrowRight") city.turn(-0.15);
-  });
-  cityCanvas.tabIndex = 0;
-
-  let visible = true;
-  const sync = () => {
-    if (visible && !document.hidden) city.start();
-    else city.stop();
-  };
-  new IntersectionObserver(([e]) => {
-    visible = e.isIntersecting;
-    sync();
-  }).observe(cityCanvas.closest(".hero__art")!);
-  document.addEventListener("visibilitychange", sync);
-  await city.warm();
-  sync();
-}
-
-idle(() => {
-  init3D().catch(() => root.classList.add("no-webgl"));
-});

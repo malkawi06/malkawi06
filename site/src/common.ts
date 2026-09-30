@@ -20,7 +20,7 @@ import arrowLeft from "@phosphor-icons/core/assets/regular/arrow-left.svg?raw";
 import arrowRight from "@phosphor-icons/core/assets/regular/arrow-right.svg?raw";
 import terminal from "@phosphor-icons/core/assets/regular/terminal-window.svg?raw";
 import { mountTerminal } from "./terminal";
-import type { Theme } from "./city";
+import type { Theme } from "./theme";
 
 const ICONS: Record<string, string> = {
   "envelope-simple": envelope,
