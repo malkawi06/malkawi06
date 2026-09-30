@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="140" viewBox="0 0 1200 140">
+  <style>
+    .sans { font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .mono { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; }
+    .node { animation: pulse 3s ease-in-out infinite; }
+    .n2 { animation-delay: 1s; } .n3 { animation-delay: 2s; }
+    @keyframes pulse { 0%, 100% { fill-opacity: .25; } 50% { fill-opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .node { animation: none; } }
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c2238"/>
+      <stop offset="1" stop-color="#070d1a"/>
+    </linearGradient>
+    <clipPath id="card"><rect width="1200" height="140" rx="16"/></clipPath>
+    <path id="wire" d="M0 110 C 250 60, 450 130, 600 95 S 950 50, 1200 100"/>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="1200" height="140" fill="url(#bg)"/>
+    <use href="#wire" fill="none" stroke="#22d3ee" stroke-opacity=".25" stroke-width="1.2"/>
+    <circle r="3" fill="#67e8f9"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#wire"/></animateMotion></circle>
+    <circle r="3" fill="#67e8f9"><animateMotion dur="7s" begin="3.5s" repeatCount="indefinite"><mpath href="#wire"/></animateMotion></circle>
+    <text class="sans" x="600" y="54" text-anchor="middle" fill="#e2e8f0" font-size="22" font-weight="600">Thanks for stopping by</text>
+    <text class="mono" x="600" y="80" text-anchor="middle" fill="#64748b" font-size="13" letter-spacing="1">
+      open to internships · research · collaborations
+      <tspan class="node" fill="#22d3ee"> ●</tspan>
+    </text>
+  </g>
+</svg>
