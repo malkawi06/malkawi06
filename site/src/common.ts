@@ -50,6 +50,23 @@ export const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 export const finePointer = window.matchMedia("(pointer: fine)").matches;
 export const siteRoot = document.body.dataset.root ?? "./";
 
+/* ---------- Open at the top ---------- */
+// Some hosts, like the preview viewer, reuse the window between pages and keep the old scroll
+// position. Start a fresh visit at the top, or at the linked section, but leave back/forward
+// and reloads to the browser.
+{
+  const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+  if (nav?.type !== "back_forward" && nav?.type !== "reload") {
+    const place = () => {
+      const target = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+      if (target) target.scrollIntoView({ behavior: "instant" });
+      else window.scrollTo({ top: 0, behavior: "instant" });
+    };
+    place();
+    requestAnimationFrame(place);
+  }
+}
+
 /* ---------- Icons ---------- */
 document.querySelectorAll<HTMLElement>("[data-icon]").forEach((el) => {
   const svg = ICONS[el.dataset.icon!];
