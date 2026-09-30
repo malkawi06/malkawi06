@@ -420,9 +420,13 @@ export type CityOptions = {
   theme: Theme;
   reducedMotion: boolean;
   lowPower: boolean;
+  /** A smaller city for small framed canvases. */
+  compact?: boolean;
+  /** Frame rate ceiling. The slow camera does not need 60 fps. */
+  maxFps?: number;
 };
 
-export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptions) {
+export function createCity({ canvas, theme, reducedMotion, lowPower, compact = false, maxFps = 60 }: CityOptions) {
   const renderer = new WebGLRenderer({ canvas, antialias: !lowPower, powerPreference: "high-performance" });
   renderer.toneMapping = NoToneMapping;
   let dpr = Math.min(window.devicePixelRatio, lowPower ? 1.25 : 1.6);
@@ -441,7 +445,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
     uLight: { value: pal.light },
   };
 
-  const HALF = lowPower ? 7 : 9; // blocks from centre to edge
+  const HALF = compact ? 6 : lowPower ? 7 : 9; // blocks from centre to edge
   const EXTENT = HALF * 2 * BLOCK;
 
   /* Sky */
@@ -594,7 +598,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
   });
 
   /* Smoke */
-  const SMOKE = lowPower ? 90 : 220;
+  const SMOKE = compact ? 50 : lowPower ? 90 : 220;
   const smokeGeo = new BufferGeometry();
   const origins = new Float32Array(SMOKE * 3);
   const phases = new Float32Array(SMOKE);
@@ -618,7 +622,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
   scene.add(smoke);
 
   /* Traffic */
-  const CARS = lowPower ? 520 : 1400;
+  const CARS = compact ? 300 : lowPower ? 520 : 1400;
   const carGeo = new BoxGeometry(1, 0.12, 0.22);
   const lanes = new Float32Array(CARS * 4);
   const carPhase = new Float32Array(CARS);
@@ -752,7 +756,12 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
     dirty = true;
   }
 
+  const minFrame = 1000 / maxFps - 1;
   function frame(now: number) {
+    if (running && !intro && now - last < minFrame) {
+      raf = requestAnimationFrame(frame);
+      return;
+    }
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
 
@@ -886,9 +895,15 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
       cancelAnimationFrame(raf);
     },
     /** Compile shaders and draw one frame so the first visible frame does not stutter. */
-    warm() {
-      renderer.compile(scene, camera);
-      frame(performance.now());
+    async warm() {
+      // compile shaders off the main thread where the browser supports it
+      try {
+        if (renderer.extensions.has("KHR_parallel_shader_compile")) await renderer.compileAsync(scene, camera);
+        else renderer.compile(scene, camera);
+      } catch {
+        renderer.compile(scene, camera);
+      }
+      requestRender();
     },
     isDirty: () => dirty,
   };

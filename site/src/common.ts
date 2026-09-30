@@ -182,14 +182,26 @@ document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
 
 /* ---------- Card spotlight ---------- */
 if (finePointer && !reducedMotion) {
+  // one style write per frame at most, and only for the card under the pointer
+  let target: HTMLElement | null = null;
+  let cx = 0;
+  let cy = 0;
+  let queued = false;
   document.addEventListener(
     "pointermove",
     (e) => {
-      const card = (e.target as Element).closest?.<HTMLElement>(".card");
-      if (!card) return;
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", `${e.clientX - r.left}px`);
-      card.style.setProperty("--my", `${e.clientY - r.top}px`);
+      target = (e.target as Element).closest?.<HTMLElement>(".card") ?? null;
+      if (!target || queued) return;
+      cx = e.clientX;
+      cy = e.clientY;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        if (!target) return;
+        const r = target.getBoundingClientRect();
+        target.style.setProperty("--mx", `${cx - r.left}px`);
+        target.style.setProperty("--my", `${cy - r.top}px`);
+      });
     },
     { passive: true },
   );

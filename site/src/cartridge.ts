@@ -1,23 +1,23 @@
 import {
   CanvasTexture,
+  DirectionalLight,
   EdgesGeometry,
   Group,
+  HemisphereLight,
   LineBasicMaterial,
   LineSegments,
   MathUtils,
   Mesh,
   MeshBasicMaterial,
-  MeshPhysicalMaterial,
+  MeshStandardMaterial,
   PerspectiveCamera,
   PlaneGeometry,
-  PMREMGenerator,
   Scene,
   SRGBColorSpace,
   WebGLRenderer,
   BoxGeometry,
 } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import type { Theme } from "./city";
 
 /*
@@ -27,8 +27,8 @@ import type { Theme } from "./city";
 */
 
 const PAL = {
-  dark: { plate: "#26272a", edge: "#6b6f74", accent: "#f2b23e", etch: "#b4b8bd", env: 0.6 },
-  light: { plate: "#f7f7f4", edge: "#8d918c", accent: "#dc8c10", etch: "#6c706b", env: 1 },
+  dark: { plate: "#35373b", edge: "#6b6f74", accent: "#f2b23e", etch: "#b4b8bd", sky: 2.3, sun: 2 },
+  light: { plate: "#f7f7f4", edge: "#8d918c", accent: "#dc8c10", etch: "#6c706b", sky: 1.9, sun: 1.45 },
 };
 
 const W = 2.6;
@@ -68,16 +68,23 @@ function etch(kind: number): CanvasTexture {
 
 export function createCartridge(canvas: HTMLCanvasElement, theme: Theme, reducedMotion: boolean) {
   const renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   const scene = new Scene();
-  const pmrem = new PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  // two plain lights instead of a reflection map: same read on flat plates, far less work on load
+  const sky = new HemisphereLight("#ffffff", "#8a8d90");
+  const sun = new DirectionalLight("#ffffff");
+  sun.position.set(4, 9, 6);
+  scene.add(sky, sun);
   const camera = new PerspectiveCamera(30, 1, 0.1, 50);
   camera.position.set(6.6, 6.4, 8.2);
   camera.lookAt(0, 0.95, 0);
 
   let pal = PAL[theme];
-  scene.environmentIntensity = pal.env;
+  const light = () => {
+    sky.intensity = pal.sky;
+    sun.intensity = pal.sun;
+  };
+  light();
 
   const root = new Group();
   scene.add(root);
@@ -85,14 +92,14 @@ export function createCartridge(canvas: HTMLCanvasElement, theme: Theme, reduced
   const edges = new EdgesGeometry(geo, 25);
   const etchGeo = new PlaneGeometry(W * 0.86, D * 0.86);
 
-  type Layer = { g: Group; body: MeshPhysicalMaterial; line: LineBasicMaterial; mark: MeshBasicMaterial; chem: boolean };
+  type Layer = { g: Group; body: MeshStandardMaterial; line: LineBasicMaterial; mark: MeshBasicMaterial; chem: boolean };
   const layers: Layer[] = [];
   // bottom to top: support, absorption II, absorption I, pre-filtration
   const kinds = [3, 1, 1, 0];
   kinds.forEach((kind, i) => {
     const chem = kind === 1;
     const g = new Group();
-    const body = new MeshPhysicalMaterial({ color: pal.plate, roughness: 0.35, clearcoat: 0.6, transparent: true, opacity: 0.96 });
+    const body = new MeshStandardMaterial({ color: pal.plate, roughness: 0.6, transparent: true, opacity: 0.96 });
     const line = new LineBasicMaterial({ color: chem ? pal.accent : pal.edge });
     const mark = new MeshBasicMaterial({ map: etch(kind), color: chem ? pal.accent : pal.etch, transparent: true, opacity: chem ? 0.55 : 0.45, depthWrite: false });
     const m = new Mesh(etchGeo, mark);
@@ -122,7 +129,7 @@ export function createCartridge(canvas: HTMLCanvasElement, theme: Theme, reduced
 
   function setTheme(t: Theme) {
     pal = PAL[t];
-    scene.environmentIntensity = pal.env;
+    light();
     railMat.color.set(pal.edge);
     layers.forEach((l) => {
       l.body.color.set(pal.plate);
@@ -163,6 +170,11 @@ export function createCartridge(canvas: HTMLCanvasElement, theme: Theme, reduced
   }
 
   function loop(now: number) {
+    // 30 fps is plenty for a slow product turntable
+    if (now - last < 32) {
+      if (running) raf = requestAnimationFrame(loop);
+      return;
+    }
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
     update(dt);

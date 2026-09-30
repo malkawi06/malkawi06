@@ -5,12 +5,22 @@ import { mountSalkaDemo } from "./salka-demo";
 const art = document.querySelector<HTMLElement>("[data-tilt]");
 if (art && finePointer && !reducedMotion) {
   const hero = art.closest("section")!;
+  let pending = false;
+  let px = 0;
+  let py = 0;
   hero.addEventListener("pointermove", (e) => {
-    const r = art.getBoundingClientRect();
-    const x = (e.clientX - (r.left + r.width / 2)) / r.width;
-    const y = (e.clientY - (r.top + r.height / 2)) / r.height;
-    art.style.setProperty("--ry", `${(x * 5).toFixed(2)}deg`);
-    art.style.setProperty("--rx", `${(-y * 4).toFixed(2)}deg`);
+    px = e.clientX;
+    py = e.clientY;
+    if (pending) return;
+    pending = true;
+    requestAnimationFrame(() => {
+      pending = false;
+      const r = art.getBoundingClientRect();
+      const x = (px - (r.left + r.width / 2)) / r.width;
+      const y = (py - (r.top + r.height / 2)) / r.height;
+      art.style.setProperty("--ry", `${(x * 5).toFixed(2)}deg`);
+      art.style.setProperty("--rx", `${(-y * 4).toFixed(2)}deg`);
+    });
   });
   hero.addEventListener("pointerleave", () => {
     art.style.setProperty("--ry", "0deg");
@@ -33,7 +43,7 @@ async function init3D() {
     return;
   }
 
-  const city = createCity({ canvas: cityCanvas, theme: currentTheme(), reducedMotion, lowPower: true });
+  const city = createCity({ canvas: cityCanvas, theme: currentTheme(), reducedMotion, lowPower: true, compact: true, maxFps: 30 });
   city.setOrbit({ cx: 0, cz: 0, radius: 30, height: 23, speed: 0.07 });
   const cart = createCartridge(cartCanvas, currentTheme(), reducedMotion);
   themeListeners.push((t) => {
@@ -76,7 +86,7 @@ async function init3D() {
     sync();
   }).observe(cityCanvas.closest(".hero__art")!);
   document.addEventListener("visibilitychange", sync);
-  city.warm();
+  await city.warm();
   sync();
 }
 

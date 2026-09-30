@@ -34,7 +34,8 @@ function rng(seed: number) {
   };
 }
 
-class Sim {
+export class Sim {
+  mode: Mode;
   lanes: Car[][] = [[], [], [], []];
   phase = 0; // 0: north-south green, 1: east-west green
   amber = 0; // seconds of amber left before switching
@@ -42,7 +43,8 @@ class Sim {
   waits: number[] = [];
   ambWaits: number[] = [];
   rand: () => number;
-  constructor(public mode: Mode, seed: number) {
+  constructor(mode: Mode, seed: number) {
+    this.mode = mode;
     this.rand = rng(seed);
   }
 
@@ -114,8 +116,17 @@ class Sim {
   }
 
   avgWait() {
-    if (!this.waits.length) return 0;
-    return this.waits.reduce((x, y) => x + y, 0) / this.waits.length;
+    // count cars still queued too, otherwise a long red looks free until those cars finally cross
+    let sum = 0;
+    let n = this.waits.length;
+    for (const w of this.waits) sum += w;
+    for (const lane of this.lanes)
+      for (const c of lane)
+        if (!c.passed && !c.amb && c.wait > 0) {
+          sum += c.wait;
+          n++;
+        }
+    return n ? sum / n : 0;
   }
 }
 
@@ -305,6 +316,11 @@ export function mountSalkaDemo(root: HTMLElement) {
   }
 
   function tick(now: number) {
+    // draw at about 30 fps; the simulation still advances by the real elapsed time
+    if (now - last < 32) {
+      raf = requestAnimationFrame(tick);
+      return;
+    }
     const dt = Math.min((now - last) / 1000, 0.05);
     last = now;
     const simDt = dt * 2.2; // run faster than real time so the difference shows quickly
@@ -355,16 +371,24 @@ export function mountSalkaDemo(root: HTMLElement) {
   });
 
   fit();
-  // warm up so the first frame already shows traffic
-  for (let i = 0; i < 60 * 25; i++) {
-    sims.fixed.step(1 / 60, false);
-    sims.adaptive.step(1 / 60, false);
-  }
   draw();
-  updateUi(true);
-  new IntersectionObserver(([e]) => {
-    visible = e.isIntersecting;
-    sync();
-  }).observe(canvas);
+  // warm up only when the demo first scrolls into view, so page load stays light
+  let warmed = false;
+  new IntersectionObserver(
+    ([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !warmed) {
+        warmed = true;
+        for (let i = 0; i < 30 * 15; i++) {
+          sims.fixed.step(1 / 30, false);
+          sims.adaptive.step(1 / 30, false);
+        }
+        draw();
+        updateUi(true);
+      }
+      sync();
+    },
+    { rootMargin: "200px 0px" },
+  ).observe(canvas);
   sync();
 }
