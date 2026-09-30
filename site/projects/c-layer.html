@@ -77,11 +77,11 @@
         <div class="cp-head__copy">
           <p class="section__num">Case study <span>Climate tech</span></p>
           <h1 translate="no">C-Layer</h1>
-          <p class="cp-lede">A multi-layer robotic system designed to capture CO<sub>2</sub> from heavy-industry stacks automatically, without stopping the plant.</p>
+          <p class="cp-lede">An AI-driven, autonomous multi-layer robotic system for capturing CO<sub>2</sub> at the stacks of heavy industry, without stopping the plant.</p>
           <ul class="cp-chips">
             <li class="chip">Self-initiated</li>
             <li class="chip">Sole designer</li>
-            <li class="chip chip--accent">Concept design, no prototype built yet</li>
+            <li class="chip chip--accent">Concept stage (TRL 2), no prototype built yet</li>
           </ul>
         </div>
         <figure class="card cp-model">
@@ -90,82 +90,126 @@
         </figure>
       </header>
 
-      <figure class="card cp-media">
-        <img src="../img/clayer-light.webp" alt="Stylized industrial stacks with capture rings in a 3D city" width="1200" height="750" class="only-light" />
-        <img src="../img/clayer-dark.webp" alt="Stylized industrial stacks with glowing capture rings in a 3D city at night" width="1200" height="750" class="only-dark" />
-      </figure>
+      <section class="cp-specs" aria-label="Design specifications">
+        <div class="card cp-spec"><strong>~45&nbsp;s</strong><span>robotic swap of a saturated filter layer</span></div>
+        <div class="card cp-spec"><strong>1.4-2.5</strong><span>MJ per kg CO<sub>2</sub> regeneration energy, driven by waste heat</span></div>
+        <div class="card cp-spec"><strong>2.0-3.5</strong><span>mmol/g CO<sub>2</sub> capture capacity of the sorbent</span></div>
+        <div class="card cp-spec"><strong>870°C</strong><span>maximum stack temperature, with active shielding</span></div>
+      </section>
+      <p class="cp-specs__note">All figures are design specifications from the project brief, not measured results.</p>
 
       <div class="cp-body">
         <section class="cp-sec">
-          <h2>The problem</h2>
-          <p>Cement plants, steel mills and power stations release large amounts of CO<sub>2</sub>. Conventional carbon capture systems help, but they bring their own problems:</p>
+          <h2>The problem: risk, not chemistry</h2>
+          <p>Heavy industry produces about a quarter of global CO<sub>2</sub> emissions, yet most plants hold back on carbon capture. The chemistry is known. The barrier is operational risk.</p>
           <ul class="cp-list">
-            <li>They use a lot of energy.</li>
-            <li>Filters need manual maintenance.</li>
-            <li>Changing filters can mean stopping the plant.</li>
-            <li>They can build up backpressure in the stack, which can damage furnaces and halt production.</li>
+            <li><b>Downtime is expensive.</b> One hour of unplanned downtime in a cement kiln can cost upwards of $50,000 in cooling and potential damage.</li>
+            <li><b>The ΔP crisis.</b> When a filter fails, backpressure (ΔP) builds in the stack and can trigger catastrophic equipment failure.</li>
+            <li><b>Static systems.</b> Conventional capture units are energy-hungry and need manual maintenance, so every filter change interrupts the plant.</li>
           </ul>
         </section>
 
         <section class="cp-sec">
-          <h2>The idea</h2>
-          <p>An autonomous filtration unit mounted on the stack. Sensors watch the filters, an AI model predicts when each one will saturate, and a robot swaps it for a fresh one while the plant keeps running.</p>
-        </section>
-
-        <section class="cp-sec">
-          <h2>Four layers</h2>
-          <div class="cp-layers">
-            <div class="card cp-layer"><p class="cp-layer__k">1</p><h3>Pre-filtration</h3><p>Removes dust and large particles from the flue gas first.</p></div>
-            <div class="card cp-layer is-chem"><p class="cp-layer__k">2</p><h3>Chemical absorption</h3><p>MEA bonded to multi-walled carbon nanotubes (MWCNTs) to absorb CO<sub>2</sub>.</p></div>
-            <div class="card cp-layer is-chem"><p class="cp-layer__k">3</p><h3>Chemical absorption</h3><p>A second MEA and CNT stage for the remaining CO<sub>2</sub>.</p></div>
-            <div class="card cp-layer"><p class="cp-layer__k">4</p><h3>Structural support</h3><p>Holds the stack against airflow pressure and heat.</p></div>
+          <h2>How C-Layer compares</h2>
+          <p>The innovation is in the modular integration and autonomous operation, not in a new standalone chemistry.</p>
+          <div class="table-wrap">
+            <table class="cp-table">
+              <caption class="visually-hidden">Comparison of C-Layer with traditional capture approaches</caption>
+              <thead>
+                <tr><th scope="col">Feature</th><th scope="col">Liquid scrubbers</th><th scope="col">Static solid sorbents</th><th scope="col" class="is-us">C-Layer (design)</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Energy use</th><td>High, around 30% of plant power</td><td>Medium</td><td class="is-us">Low, targeting 50% savings</td></tr>
+                <tr><th scope="row">Downtime risk</th><td>High, shutdowns required</td><td>Interruptions for manual swaps</td><td class="is-us">Zero, autonomous swap</td></tr>
+                <tr><th scope="row">Maintenance</th><td>Labor intensive</td><td>Periodic and manual</td><td class="is-us">Predictive and automated</td></tr>
+              </tbody>
+            </table>
           </div>
         </section>
 
         <section class="cp-sec">
-          <h2>How it is designed to work</h2>
+          <h2>The solution</h2>
+          <p>An autonomous, modular filtration skid mounted on the exhaust stack, built for continuous capture around the clock.</p>
+          <div class="cp-layers">
+            <div class="card cp-layer"><p class="cp-layer__k">1</p><h3>Pre-filtration</h3><p>Removes dust and large particles from the hot flue gas.</p></div>
+            <div class="card cp-layer is-chem"><p class="cp-layer__k">2</p><h3>MEA absorption</h3><p>Monoethanolamine grafted onto multi-walled carbon nanotubes binds CO<sub>2</sub>.</p></div>
+            <div class="card cp-layer is-chem"><p class="cp-layer__k">3</p><h3>CNT absorption</h3><p>A second carbon-nanotube stage captures the remaining CO<sub>2</sub>.</p></div>
+            <div class="card cp-layer"><p class="cp-layer__k">4</p><h3>Structural support</h3><p>Holds the assembly against airflow pressure and heat.</p></div>
+          </div>
+          <p class="cp-after">When a layer saturates, NEMA 34 stepper motors and a push-pull arm on stainless steel guide rails swap it in about 45 seconds. The system is designed to run 24/7 with zero backpressure risk.</p>
+        </section>
+
+        <figure class="card cp-diagram cp-sec--wide">
+          <img src="../img/clayer-diagram.webp" alt="Concept diagram of the C-Layer system: the four-layer filter on the industrial exhaust, CO2, pressure and temperature sensors feeding an NVIDIA Jetson Nano control unit over Modbus TCP, a push-pull arm moving saturated filters into a regeneration chamber that releases purified CO2, and a fail-safe bypass damper with backup battery" width="1285" height="857" loading="lazy" />
+          <figcaption>Concept illustration from the C-Layer brief: sensors, AI control unit, swap arm, regeneration chamber and fail-safe damper.</figcaption>
+        </figure>
+
+        <section class="cp-sec">
+          <h2>Chemistry: CNT and MEA</h2>
+          <p>C-Layer uses a <b>solid-supported amine</b> approach, putting a proven capture chemistry on a high-performance scaffold.</p>
           <ol class="cp-steps">
-            <li><b>Sense.</b> CO<sub>2</sub>, pressure and temperature sensors read the stack continuously.</li>
-            <li><b>Predict.</b> An NVIDIA Jetson Nano analyses the readings. An LSTM network estimates the remaining useful life of each filter before it fails.</li>
-            <li><b>Swap.</b> When a filter saturates, the robot replaces it. Design target: about 20 seconds, with no shutdown and no human on the stack.</li>
-            <li><b>Regenerate.</b> The used filter moves to a chamber where the plant’s own waste heat releases the captured CO<sub>2</sub> for reuse.</li>
+            <li><b>Binding.</b> Monoethanolamine (MEA) molecules are grafted onto multi-walled carbon nanotubes (MWCNTs).</li>
+            <li><b>Efficient regeneration.</b> The solid support has a low specific heat capacity, so releasing the CO<sub>2</sub> needs only 1.4-2.5 MJ per kg, by design.</li>
+            <li><b>Waste heat recovery.</b> Saturated filters move to an on-site chamber where the factory’s own waste heat releases the CO<sub>2</sub>, and the cleaned filter goes back into rotation.</li>
           </ol>
         </section>
 
         <section class="cp-sec">
-          <h2>Engineering choices</h2>
+          <h2>Surviving an 870°C stack</h2>
           <div class="cp-duo">
-            <div class="card cp-mini"><h3>Mechanics</h3><p>NEMA 23 and NEMA 34 stepper motors for torque and precision, linear actuators to push and pull filters, linear guide rails for smooth travel, and a 316L stainless steel frame against heat and corrosion.</p></div>
-            <div class="card cp-mini"><h3>Chemistry</h3><p>Combining MEA with carbon nanotubes is meant to raise absorption efficiency, lower energy use and speed up regeneration. Using waste heat for regeneration targets about 50% less energy than conventional systems.</p></div>
+            <div class="card cp-mini"><h3>Reflective shields</h3><p>Radiated heat follows the Stefan-Boltzmann law, <span class="formula">P = σAT<sup>4</sup></span>, so it rises steeply with temperature. The shields are designed to reflect 95% of it.</p></div>
+            <div class="card cp-mini"><h3>Vortex tube cooling</h3><p>Compressed air creates a positive-pressure cold zone that keeps the electronics safe.</p></div>
+            <div class="card cp-mini"><h3>Aerogel insulation</h3><p>Stops heat from conducting into sensitive components.</p></div>
+            <div class="card cp-mini"><h3>Fail-safe damper</h3><p>A spring-return bypass damper, with a backup battery, opens instantly on power failure to protect the furnace.</p></div>
           </div>
         </section>
 
         <section class="cp-sec">
-          <h2>Safety by design</h2>
+          <h2>AI and connectivity</h2>
+          <p>The AI is phased so the system stays reliable before it has data to learn from.</p>
+          <div class="cp-duo">
+            <div class="card cp-mini"><p class="cp-layer__k">Phase 1</p><h3>Statistical degradation models</h3><p>The NVIDIA Jetson Nano fuses CO<sub>2</sub>, pressure and temperature readings to track filter wear.</p></div>
+            <div class="card cp-mini"><p class="cp-layer__k">Phase 2</p><h3>LSTM remaining useful life</h3><p>Once baseline operating data exists, LSTM networks predict when each filter will saturate.</p></div>
+          </div>
+          <p class="cp-after"><b>Modbus TCP</b> connects the unit to the plant’s PLCs. <b>MQTT</b> sends data to the cloud for carbon credit verification.</p>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Technical data sheet</h2>
+          <div class="table-wrap">
+            <table class="cp-table cp-table--tds">
+              <caption class="visually-hidden">C-Layer technical data sheet (design specifications)</caption>
+              <tbody>
+                <tr><th scope="row">System type</th><td>Autonomous modular carbon capture skid</td></tr>
+                <tr><th scope="row">Capture media</th><td>MEA-functionalized MWCNTs</td></tr>
+                <tr><th scope="row">Capture capacity</th><td>2.0-3.5 mmol/g CO<sub>2</sub></td></tr>
+                <tr><th scope="row">Regeneration energy</th><td>1.4-2.5 MJ/kg CO<sub>2</sub>, waste heat driven</td></tr>
+                <tr><th scope="row">Max operating temperature</th><td>870°C with active shielding</td></tr>
+                <tr><th scope="row">Mechanical swap time</th><td>~45 seconds</td></tr>
+                <tr><th scope="row">Actuators</th><td>NEMA 34 high-torque stepper motors (8-12 Nm)</td></tr>
+                <tr><th scope="row">AI controller</th><td>NVIDIA Jetson Nano, phased toward LSTM</td></tr>
+                <tr><th scope="row">Materials</th><td>316L stainless steel</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Why it matters</h2>
+          <div class="cp-grid4 cp-grid3">
+            <div class="card cp-mini"><p class="cp-layer__k">SDG 13</p><h3>Climate action</h3><p>Captures CO<sub>2</sub> autonomously at the industrial source and targets a 50% lower energy penalty.</p></div>
+            <div class="card cp-mini"><p class="cp-layer__k">SDG 7</p><h3>Clean energy</h3><p>Regenerates filters with factory waste heat instead of plant power.</p></div>
+            <div class="card cp-mini"><p class="cp-layer__k">SDG 11</p><h3>Sustainable cities</h3><p>Lowers the footprint of cement and steel and improves air quality near industrial zones.</p></div>
+          </div>
+        </section>
+
+        <section class="cp-sec">
+          <h2>Status and budget</h2>
+          <p>C-Layer is at <b>TRL 2</b>: the concept is defined and the initial blueprints are drawn. A physical prototype has not been built yet because it needs funding.</p>
           <ul class="cp-list">
-            <li>Built for stack environments up to 870°C.</li>
-            <li>Reflective shields designed to reflect about 95% of radiant heat, plus aerogel insulation.</li>
-            <li>Vortex tube cooling keeps the electronics cool with compressed air.</li>
-            <li>A spring-return bypass damper opens on power loss, so the furnace is protected even if the system fails.</li>
+            <li><b>Lab prototype budget:</b> $4,000 to $6,300 for a bench-top proof of concept.</li>
+            <li><b>Industrial pilot:</b> would need more capital for industrial-grade sensors and specialized thermal shielding.</li>
           </ul>
-        </section>
-
-        <section class="cp-sec">
-          <h2>AI roadmap</h2>
-          <div class="cp-duo">
-            <div class="card cp-mini"><h3>Phase 1</h3><p>Analyse sensor data and monitor performance.</p></div>
-            <div class="card cp-mini"><h3>Phase 2</h3><p>LSTM models predict the remaining useful life (RUL) of each filter.</p></div>
-          </div>
-        </section>
-
-        <section class="cp-sec">
-          <h2>Who it is for, and why it matters</h2>
-          <p>Cement plants, steel and iron works, power stations, industrial zones and environmental agencies. The design supports UN Sustainable Development Goals 7 (clean energy), 9 (industry and innovation), 11 (sustainable cities) and 13 (climate action).</p>
-        </section>
-
-        <section class="cp-sec">
-          <h2>Status</h2>
-          <p>C-Layer is a concept design and research project. A physical prototype has not been built yet because it needs funding. The estimated prototype budget is <b>$4,000 to $6,300</b>, covering motors, sensors, the Jetson Nano, the frame and electronics.</p>
         </section>
       </div>
 

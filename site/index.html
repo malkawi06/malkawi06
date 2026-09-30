@@ -228,14 +228,14 @@
                 <div><dt>Type</dt><dd>Self-initiated</dd></div>
               </dl>
               <ul class="tags" aria-label="Technologies">
-                <li>NVIDIA Jetson Nano</li><li>LSTM</li><li>NEMA 23/34</li><li>316L steel</li>
+                <li>NVIDIA Jetson Nano</li><li>MEA + CNT</li><li>NEMA 34</li><li>Modbus TCP</li><li>MQTT</li>
               </ul>
               <details class="more">
                 <summary>Design Targets <span data-icon="caret-down"></span></summary>
                 <ul class="steps">
-                  <li><b>~20&nbsp;s filter swap.</b> Planned with no plant shutdown.</li>
-                  <li><b>Four layers.</b> Pre-filtration, two MEA and carbon-nanotube absorption stages, and a structural support layer.</li>
-                  <li><b>Predictive.</b> An LSTM on the Jetson estimates remaining filter life from CO<sub>2</sub>, pressure and heat.</li>
+                  <li><b>~45&nbsp;s filter swap.</b> Planned with no plant shutdown.</li>
+                  <li><b>Four layers.</b> Pre-filtration, MEA and carbon-nanotube absorption stages, and a structural support layer.</li><li><b>Waste heat regeneration.</b> Saturated filters release their CO<sub>2</sub> in an on-site chamber heated by the plant, targeting 1.4-2.5 MJ per kg.</li>
+                  <li><b>Predictive.</b> Statistical degradation models on the Jetson first, then LSTM prediction of remaining filter life once data exists.</li>
                   <li><b>Built for 870°C.</b> Reflective shields, aerogel insulation and vortex-tube cooling.</li>
                   <li><b>Fail-safe.</b> A spring-return bypass damper opens on power loss to protect the furnace.</li>
                 </ul>
