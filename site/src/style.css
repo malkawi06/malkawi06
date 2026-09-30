@@ -528,17 +528,81 @@ img {
   color: var(--muted);
 }
 
-/* Hero terminal: dark in both themes, like a real one */
+/* Hero terminal: dark in both themes, like a real one. It floats in a light
+   3D pose: a slow bob, a tilt toward the pointer, and an amber plate set back
+   in depth so the layers separate as it moves. */
 .hero__term {
+  --rx: 4deg;
+  --ry: -7deg;
+  position: relative;
   min-width: 0;
+  perspective: 1400px;
+  padding-bottom: 36px;
+}
+.hterm-float {
+  transform-style: preserve-3d;
+  animation: float 6.5s ease-in-out infinite;
+}
+.hterm-tilt {
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.8s var(--ease);
+}
+.hterm-back {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--shadow);
+  border-radius: 18px;
+  background: var(--accent);
+  transform: translate3d(16px, 16px, -46px);
+}
+.hterm-ground {
+  position: absolute;
+  left: 14%;
+  right: 8%;
+  bottom: 0;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--shadow) 30%, transparent), transparent);
+  filter: blur(4px);
+  animation: ground 6.5s ease-in-out infinite;
+}
+:root[data-theme="dark"] .hterm-ground {
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--accent) 22%, transparent), transparent);
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+@keyframes ground {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.86);
+    opacity: 0.6;
+  }
+}
+.hero__term.is-still .hterm-float,
+.hero__term.is-still .hterm-ground {
+  animation-play-state: paused;
 }
 .hterm {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: clamp(360px, 52vh, 460px);
   border: 1.5px solid var(--edge);
   border-radius: 18px;
-  box-shadow: 6px 6px 0 var(--shadow);
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.45);
   background: #141416;
   color: #e8e8e3;
   font-family: var(--mono);
@@ -606,6 +670,15 @@ img {
 .hterm:focus-within {
   border-color: var(--accent);
 }
+@media (prefers-reduced-motion: reduce) {
+  .hterm-float,
+  .hterm-ground {
+    animation: none;
+  }
+  .hterm-tilt {
+    transition: none;
+  }
+}
 
 @media (max-width: 960px) {
   .hero {
@@ -614,7 +687,10 @@ img {
     padding-top: 32px;
   }
   .hero__term {
+    --rx: 4deg;
+    --ry: -4deg;
     margin-top: 8px;
+    padding-right: 16px;
   }
   .hterm {
     height: clamp(360px, 62vh, 440px);

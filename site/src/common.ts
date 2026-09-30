@@ -1,6 +1,5 @@
 import "./style.css";
 import envelope from "@phosphor-icons/core/assets/regular/envelope-simple.svg?raw";
-import download from "@phosphor-icons/core/assets/regular/download-simple.svg?raw";
 import github from "@phosphor-icons/core/assets/regular/github-logo.svg?raw";
 import linkedin from "@phosphor-icons/core/assets/regular/linkedin-logo.svg?raw";
 import sun from "@phosphor-icons/core/assets/regular/sun.svg?raw";
@@ -24,7 +23,6 @@ import type { Theme } from "./theme";
 
 const ICONS: Record<string, string> = {
   "envelope-simple": envelope,
-  "download-simple": download,
   "github-logo": github,
   "linkedin-logo": linkedin,
   sun,

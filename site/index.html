@@ -109,9 +109,6 @@
             <a class="btn btn--primary" href="mailto:malkawimohammadh@gmail.com">
               <span data-icon="envelope-simple"></span>Email Me
             </a>
-            <a class="btn btn--secondary" href="./Mohammad-H-Malkawi-CV.pdf" download>
-              <span data-icon="download-simple"></span>Download CV
-            </a>
           </div>
           <ul class="hero__social reveal" style="--i: 4" aria-label="Profiles">
             <li><a href="https://github.com/malkawi06" target="_blank" rel="noopener" aria-label="GitHub"><span data-icon="github-logo"></span></a></li>
@@ -121,30 +118,36 @@
           </ul>
         </div>
 
-        <div class="hero__term">
-          <div class="hterm" data-hero-term>
-            <div class="term__bar">
-              <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <p>malkawi@portfolio: ~</p>
-              <span class="hterm__hint" aria-hidden="true">type <kbd>help</kbd></span>
-            </div>
-            <div class="term__out hterm__out" data-hterm-out aria-live="polite">
-              <div class="hterm__intro" data-hterm-intro>
-                <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">whoami</span></p>
-                <p class="is-ok">Mohammad H. Malkawi</p>
-                <p>Networks &amp; security student at Jadara University, Irbid</p>
-                <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">status</span></p>
-                <p><span class="dot" aria-hidden="true"></span> Open to internships, remote or in Jordan</p>
-                <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">cat focus.txt</span></p>
-                <p>Networking · Security · Systems that work in the real world</p>
-                <p class="is-dim">Type help to see what else I can tell you.</p>
+        <div class="hero__term" data-float>
+          <div class="hterm-float">
+            <div class="hterm-tilt">
+              <div class="hterm-back" aria-hidden="true"></div>
+              <div class="hterm" data-hero-term>
+                <div class="term__bar">
+                  <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <p>malkawi@portfolio: ~</p>
+                  <span class="hterm__hint" aria-hidden="true">type <kbd>help</kbd></span>
+                </div>
+                <div class="term__out hterm__out" data-hterm-out aria-live="polite">
+                  <div class="hterm__intro" data-hterm-intro>
+                    <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">whoami</span></p>
+                    <p class="is-ok">Mohammad H. Malkawi</p>
+                    <p>Networks &amp; security student at Jadara University, Irbid</p>
+                    <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">status</span></p>
+                    <p><span class="dot" aria-hidden="true"></span> Open to internships, remote or in Jordan</p>
+                    <p class="is-cmd"><span class="hterm__p" aria-hidden="true">$ </span><span class="c">cat focus.txt</span></p>
+                    <p>Networking · Security · Systems that work in the real world</p>
+                    <p class="is-dim">Type help to see what else I can tell you.</p>
+                  </div>
+                </div>
+                <form class="term__form" data-hterm-form>
+                  <label for="hterm-in" class="term__prompt">$</label>
+                  <input id="hterm-in" name="command" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help" aria-label="Type a terminal command" />
+                </form>
               </div>
             </div>
-            <form class="term__form" data-hterm-form>
-              <label for="hterm-in" class="term__prompt">$</label>
-              <input id="hterm-in" name="command" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help" aria-label="Type a terminal command" />
-            </form>
           </div>
+          <div class="hterm-ground" aria-hidden="true"></div>
         </div>
       </section>
 

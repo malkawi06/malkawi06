@@ -1,10 +1,63 @@
-import { reducedMotion, siteRoot, toggleTheme } from "./common";
+import { finePointer, reducedMotion, siteRoot, toggleTheme } from "./common";
 import { mountHeroTerminal } from "./terminal";
 import { mountSalkaDemo } from "./salka-demo";
 
 /* ---------- Hero terminal ---------- */
 const heroTerm = document.querySelector<HTMLElement>("[data-hero-term]");
 if (heroTerm) mountHeroTerminal(heroTerm, siteRoot, toggleTheme, reducedMotion);
+
+// the terminal floats; it leans toward the pointer and holds still while someone types in it
+const float = document.querySelector<HTMLElement>("[data-float]");
+if (float && !reducedMotion) {
+  let onScreen = true;
+  let typing = false;
+  const still = () => float.classList.toggle("is-still", !onScreen || typing);
+  new IntersectionObserver(([e]) => {
+    onScreen = e.isIntersecting;
+    still();
+  }).observe(float);
+
+  const rest = () => {
+    float.style.removeProperty("--rx");
+    float.style.removeProperty("--ry");
+  };
+  float.addEventListener("focusin", () => {
+    typing = true;
+    still();
+    float.style.setProperty("--rx", "1.5deg");
+    float.style.setProperty("--ry", "-2deg");
+  });
+  float.addEventListener("focusout", () => {
+    typing = false;
+    still();
+    rest();
+  });
+
+  if (finePointer) {
+    const hero = float.closest("section")!;
+    let queued = false;
+    let px = 0;
+    let py = 0;
+    hero.addEventListener("pointermove", (e) => {
+      px = e.clientX;
+      py = e.clientY;
+      if (queued || typing) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        if (typing) return;
+        const r = float.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, (px - (r.left + r.width / 2)) / (r.width * 0.9)));
+        const y = Math.max(-1, Math.min(1, (py - (r.top + r.height / 2)) / (r.height * 0.9)));
+        float.style.setProperty("--ry", `${(-7 + x * 5).toFixed(2)}deg`);
+        float.style.setProperty("--rx", `${(4 - y * 4).toFixed(2)}deg`);
+      });
+    });
+    hero.addEventListener("pointerleave", () => {
+      if (!typing) rest();
+    });
+  }
+}
 
 /* ---------- Leadership timeline ---------- */
 // the line fills and each node lights up once it passes 60% of the viewport height
