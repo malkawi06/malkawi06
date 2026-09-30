@@ -1,76 +1,132 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,100:0ea5e9&height=200&section=header&text=Mohammad%20Malkawi&fontSize=48&fontColor=ffffff&fontAlignY=38&desc=Computer%20Networks%20%C2%B7%20Cybersecurity&descAlignY=58&descSize=18" width="100%" alt="banner"/>
+<img src="assets/banner.svg" width="100%" alt="Mohammad Malkawi — Computer Networks & Cybersecurity"/>
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&pause=1000&color=0EA5E9&center=true&vCenter=true&width=700&lines=Computer+Networks+%26+Cybersecurity+Student;Network+Security+%7C+Infrastructure;Former+Chair+%40+IEEE+RAS+Jadara;Robotics+%26+AI+on+the+side" alt="Typing SVG"/></a>
+<br/><br/>
+
+<a href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365"><img src="https://img.shields.io/badge/LinkedIn-0b1626?style=flat-square&logo=linkedin&logoColor=22d3ee" alt="LinkedIn"/></a>&nbsp;
+<a href="mailto:malkawimohammadh@gmail.com"><img src="https://img.shields.io/badge/Email-0b1626?style=flat-square&logo=gmail&logoColor=22d3ee" alt="Email"/></a>&nbsp;
+<img src="https://img.shields.io/badge/Irbid,_Jordan-0b1626?style=flat-square&logo=googlemaps&logoColor=22d3ee" alt="Location"/>&nbsp;
+<img src="https://img.shields.io/badge/Open_to_internships-0b1626?style=flat-square&logo=target&logoColor=22d3ee" alt="Open to internships"/>
+
+</div>
 
 <br/>
 
-<img src="https://img.shields.io/badge/B.Sc.-Computer_Networks_%26_Cybersecurity-0ea5e9?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/IEEE_RAS_Jadara-Former_Chair-00629B?style=for-the-badge&logo=ieee&logoColor=white"/>
-<img src="https://img.shields.io/badge/Irbid,_Jordan-334155?style=for-the-badge&logo=googlemaps&logoColor=white"/>
+### About
 
-<br/><br/>
+Computer Networks & Cybersecurity student focused on designing, operating, and securing the infrastructure that connected systems depend on. Alongside my major, I lead and build in robotics and applied AI — from organizing a national robotics competition to shipping ML-driven systems for smart cities and climate tech.
 
-<a href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/></a>
-<a href="mailto:malkawimohammadh@gmail.com"><img src="https://img.shields.io/badge/Email-0ea5e9?style=for-the-badge&logo=gmail&logoColor=white"/></a>
-<a href="https://github.com/malkawi06"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/></a>
+I'm currently open to **networking and cybersecurity internships**, **research collaborations**, and **student-led initiatives**.
 
-</div>
+<br/>
 
----
+### Leadership
 
-## About
+<table>
+  <tr>
+    <td width="30%" valign="top"><b>IEEE RAS Jadara</b><br/><sub>Former Chair</sub></td>
+    <td valign="top">Led the university's Robotics & Automation Society chapter — events, technical workshops, and team development.</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>RoboCraft</b><br/><sub>Organizer</sub></td>
+    <td valign="top">Grew the competition to national scale: <b>95+ teams</b> and <b>~300 participants</b>.</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Funding</b><br/><sub>Grants secured</sub></td>
+    <td valign="top"><b>IEEE RAS Chapter Initiative Grant</b> and additional support from <b>IEEE Young Professionals Jordan</b>.</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Competitions</b><br/><sub>Participant</sub></td>
+    <td valign="top">Hackathons and innovation challenges at the intersection of AI, hardware, and infrastructure.</td>
+  </tr>
+</table>
 
-**Computer Networks & Cybersecurity** student focused on building and securing the infrastructure that connected systems depend on. Outside my major, I'm active in robotics and AI through IEEE student activities and competitions.
+<br/>
 
-- 🔐 **Major:** Computer Networks & Cybersecurity
-- 🎯 **Open to:** Networking / Cybersecurity internships · research collaborations · student initiatives
+### Selected Projects
 
----
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <b>SALKA</b> — Adaptive Traffic Management<br/>
+      <sub>Smart Cities · Piloted at Culture Circle, Irbid</sub>
+      <br/><br/>
+      Traffic system that predicts flow and adapts signal timing in real time, built toward national deployment.
+      <br/><br/>
+      • Simulation with SUMO / TraCI<br/>
+      • LSTM traffic-flow forecasting<br/>
+      • Prediction-driven signal control
+      <br/><br/>
+      <img src="https://img.shields.io/badge/Python-0b1626?style=flat-square&logo=python&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/SUMO-0b1626?style=flat-square"/>
+      <img src="https://img.shields.io/badge/LSTM-0b1626?style=flat-square"/>
+    </td>
+    <td width="50%" valign="top">
+      <b>C-Layer</b> — Autonomous CO₂ Capture Robot<br/>
+      <sub>Climate Tech · Finalist, Creative Innovation Competition</sub>
+      <br/><br/>
+      AI-driven robotic system for industrial carbon capture with autonomous maintenance.
+      <br/><br/>
+      • Autonomous filter swapping<br/>
+      • Runs on NVIDIA Jetson Nano<br/>
+      • LSTM predictive maintenance
+      <br/><br/>
+      <img src="https://img.shields.io/badge/Jetson_Nano-0b1626?style=flat-square&logo=nvidia&logoColor=76B900"/>
+      <img src="https://img.shields.io/badge/Robotics-0b1626?style=flat-square"/>
+      <img src="https://img.shields.io/badge/LSTM-0b1626?style=flat-square"/>
+    </td>
+  </tr>
+</table>
 
-## Student Activities & Leadership
+<br/>
 
-- 🤖 **Former Chair, IEEE RAS Jadara** — led the Robotics & Automation Society chapter
-- 🏆 **Organizer of RoboCraft** — grew it into a national-level robotics competition with **95+ teams** and ~300 participants
-- 💰 Secured the **IEEE RAS Chapter Initiative Grant** and additional funding from **IEEE YP Jordan**
-- 🧠 Hackathons & innovation competitions at the intersection of AI, hardware, and infrastructure
+### Technical Skills
 
----
+<table>
+  <tr>
+    <td width="30%"><b>Networking</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/Cisco-0b1626?style=flat-square&logo=cisco&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/Routing_%26_Switching-0b1626?style=flat-square"/>
+      <img src="https://img.shields.io/badge/TCP%2FIP-0b1626?style=flat-square"/>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Security</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/Kali_Linux-0b1626?style=flat-square&logo=kalilinux&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/Wireshark-0b1626?style=flat-square&logo=wireshark&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/Linux-0b1626?style=flat-square&logo=linux&logoColor=22d3ee"/>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Programming</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/Python-0b1626?style=flat-square&logo=python&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/C++-0b1626?style=flat-square&logo=cplusplus&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/Bash-0b1626?style=flat-square&logo=gnubash&logoColor=22d3ee"/>
+    </td>
+  </tr>
+  <tr>
+    <td><b>AI & Hardware</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/NVIDIA_Jetson-0b1626?style=flat-square&logo=nvidia&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/Arduino-0b1626?style=flat-square&logo=arduino&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/LSTM-0b1626?style=flat-square"/>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Tools</b></td>
+    <td>
+      <img src="https://img.shields.io/badge/Git-0b1626?style=flat-square&logo=git&logoColor=22d3ee"/>
+      <img src="https://img.shields.io/badge/Docker-0b1626?style=flat-square&logo=docker&logoColor=22d3ee"/>
+    </td>
+  </tr>
+</table>
 
-## Featured Projects
-
-### 🚦 SALKA — Adaptive Traffic Management
-Smart-city system piloted at **Culture Circle, Irbid**, with the goal of national deployment.
-- Traffic simulation with **SUMO / TraCI**
-- **LSTM-based** traffic flow prediction
-- **Adaptive signal control** driven by the predictions
-
-`Python` `SUMO` `TraCI` `LSTM` `Smart Cities`
-
-### 🌱 C-Layer — Autonomous CO₂ Capture Robot
-AI-driven robotic system for industrial carbon capture — **finalist** in a university Creative Innovation Competition.
-- Autonomous robotic filter swapping on **NVIDIA Jetson Nano**
-- **LSTM-based** predictive maintenance
-
-`Jetson Nano` `Robotics` `LSTM` `Climate Tech`
-
----
-
-## Tech Stack
+<br/>
 
 <div align="center">
-
-<img src="https://skillicons.dev/icons?i=linux,kali,bash,python,cpp,git,github,docker&perline=8" alt="skills"/>
-
-<br/><br/>
-
-<img src="https://img.shields.io/badge/Cisco-1BA0D7?style=flat-square&logo=cisco&logoColor=white"/>
-<img src="https://img.shields.io/badge/Wireshark-1679A7?style=flat-square&logo=wireshark&logoColor=white"/>
-<img src="https://img.shields.io/badge/Kali_Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white"/>
-<img src="https://img.shields.io/badge/Arduino-00878F?style=flat-square&logo=arduino&logoColor=white"/>
-<img src="https://img.shields.io/badge/NVIDIA_Jetson-76B900?style=flat-square&logo=nvidia&logoColor=white"/>
-
+<sub>Let's connect — <a href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365">LinkedIn</a> · <a href="mailto:malkawimohammadh@gmail.com">malkawimohammadh@gmail.com</a></sub>
 </div>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0ea5e9,100:0f172a&height=100&section=footer" width="100%" alt="footer"/>

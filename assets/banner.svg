@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070d1a"/>
+      <stop offset="1" stop-color="#0c2238"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.82" cy="0.45" r="0.5">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#94a3b8" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+    <clipPath id="card"><rect width="1200" height="320" rx="16"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1200" height="320" fill="url(#bg)"/>
+    <rect width="1200" height="320" fill="url(#grid)"/>
+    <rect width="1200" height="320" fill="url(#glow)"/>
+
+    <!-- network topology -->
+    <g stroke="#22d3ee" stroke-opacity="0.35" stroke-width="1.2" fill="none">
+      <path d="M820 90L930 140L1060 80L1130 170L1010 230L930 140M930 140L870 240L1010 230M1060 80L1010 230M870 240L760 200L820 90M1130 170L1180 260M1060 80L1150 40"/>
+    </g>
+    <g stroke="#22d3ee" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="3 5" fill="none">
+      <path d="M760 200L700 120M820 90L760 30M1010 230L1070 300"/>
+    </g>
+    <g fill="#0b1626" stroke="#22d3ee" stroke-width="1.5">
+      <circle cx="820" cy="90" r="6"/>
+      <circle cx="1060" cy="80" r="6"/>
+      <circle cx="1130" cy="170" r="6"/>
+      <circle cx="870" cy="240" r="6"/>
+      <circle cx="760" cy="200" r="5"/>
+      <circle cx="1010" cy="230" r="6"/>
+      <circle cx="1150" cy="40" r="4"/>
+      <circle cx="1180" cy="260" r="4"/>
+    </g>
+    <circle cx="700" cy="120" r="3" fill="#22d3ee" fill-opacity="0.4"/>
+    <circle cx="760" cy="30" r="3" fill="#22d3ee" fill-opacity="0.4"/>
+    <circle cx="1070" cy="300" r="3" fill="#22d3ee" fill-opacity="0.4"/>
+
+    <!-- central secured node -->
+    <circle cx="930" cy="140" r="26" fill="#22d3ee" fill-opacity="0.08" stroke="#22d3ee" stroke-opacity="0.5"/>
+    <circle cx="930" cy="140" r="15" fill="#0b1626" stroke="#22d3ee" stroke-width="2"/>
+    <g fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M925.5 139v-3.5a4.5 4.5 0 0 1 9 0V139"/>
+      <rect x="922.5" y="139" width="15" height="10" rx="2"/>
+    </g>
+
+    <!-- text -->
+    <g font-family="'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif">
+      <text x="72" y="100" fill="#22d3ee" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="15" letter-spacing="3">COMPUTER NETWORKS · CYBERSECURITY</text>
+      <text x="70" y="170" fill="#f1f5f9" font-size="62" font-weight="700" letter-spacing="-1">Mohammad Malkawi</text>
+      <rect x="72" y="196" width="56" height="3" rx="1.5" fill="#22d3ee"/>
+      <text x="72" y="238" fill="#94a3b8" font-size="21">Network security · Infrastructure · Robotics &amp; AI</text>
+      <text x="72" y="270" fill="#64748b" font-size="16">Irbid, Jordan  ·  Former Chair, IEEE RAS Jadara</text>
+    </g>
+  </g>
+</svg>
