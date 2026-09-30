@@ -63,17 +63,12 @@ Industrial carbon-capture filters need regular replacement, which is slow and ma
 
 ## Leadership
 
-**Former Chair, IEEE RAS Jadara**
-Led the university's Robotics & Automation Society student chapter.
-
-**Organizer, RoboCraft**
-Grew RoboCraft into a national-level robotics competition with **95+ teams** and **~300 participants**.
-
-**Funding**
-Secured the **IEEE RAS Chapter Initiative Grant** and additional support from **IEEE Young Professionals Jordan**.
-
-**Competitions**
-Hackathons and innovation challenges at the intersection of AI, hardware, and infrastructure.
+| Role | Impact |
+|:--|:--|
+| **Former Chair** · IEEE RAS Jadara | Led the university's Robotics & Automation Society student chapter. |
+| **Organizer** · RoboCraft | Grew RoboCraft into a national-level robotics competition with **95+ teams** and **~300 participants**. |
+| **Fundraising** · IEEE | Secured the **IEEE RAS Chapter Initiative Grant** and additional support from **IEEE Young Professionals Jordan**. |
+| **Competitor** · Hackathons | Hackathons and innovation challenges at the intersection of AI, hardware, and infrastructure. |
 
 <img src="assets/divider.svg" width="100%" alt=""/>
 
