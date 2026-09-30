@@ -671,7 +671,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
   const bloom = new UnrealBloomPass(new Vector2(256, 256), pal.bloom, 0.5, 0.55);
-  bloom.enabled = !lowPower || theme === "dark";
+  bloom.enabled = theme === "dark";
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
@@ -724,7 +724,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
     trafficMat.blending = next === "dark" ? AdditiveBlending : NormalBlending;
     trafficMat.needsUpdate = true;
     bloom.strength = pal.bloom;
-    bloom.enabled = !lowPower || next === "dark";
+    bloom.enabled = next === "dark";
     requestRender();
   }
 
@@ -737,6 +737,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
   let slowFrames = 0;
   let sampled = 0;
   let intro: { from: Shot; to: () => Shot; start: number; dur: number; done: () => void } | null = null;
+  let orbit: { cx: number; cz: number; radius: number; height: number; speed: number; angle: number; ty: number } | null = null;
 
   function setShot(a: Shot, b: Shot, t: number) {
     const k = t * t * (3 - 2 * t);
@@ -771,6 +772,15 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
         intro = null;
         done();
       }
+    } else if (orbit) {
+      if (!reducedMotion) orbit.angle += orbit.speed * dt;
+      wantPos.set(orbit.cx + Math.cos(orbit.angle) * orbit.radius, orbit.height, orbit.cz + Math.sin(orbit.angle) * orbit.radius);
+      wantTarget.set(orbit.cx, orbit.ty, orbit.cz);
+      if (reducedMotion) camPos.copy(wantPos);
+      camPos.x = MathUtils.damp(camPos.x, wantPos.x, 6, dt);
+      camPos.y = MathUtils.damp(camPos.y, wantPos.y, 6, dt);
+      camPos.z = MathUtils.damp(camPos.z, wantPos.z, 6, dt);
+      camTarget.copy(wantTarget);
     } else if (!reducedMotion) {
       camPos.x = MathUtils.damp(camPos.x, wantPos.x, 2.6, dt);
       camPos.y = MathUtils.damp(camPos.y, wantPos.y, 2.6, dt);
@@ -847,6 +857,18 @@ export function createCity({ canvas, theme, reducedMotion, lowPower }: CityOptio
     },
     setPointer(x: number, y: number) {
       pointer.set(x, y);
+    },
+    /** Circle the camera around a point on the ground. */
+    setOrbit(o: { cx: number; cz: number; radius: number; height: number; speed: number; angle?: number; ty?: number }) {
+      orbit = { angle: o.angle ?? 0.8, ty: o.ty ?? 0, ...o } as typeof orbit & object;
+      camPos.set(o.cx + Math.cos(orbit!.angle) * o.radius, o.height, o.cz + Math.sin(orbit!.angle) * o.radius);
+      camTarget.set(o.cx, orbit!.ty, o.cz);
+      requestRender();
+    },
+    /** Turn the orbit by a number of radians (used for drag). */
+    turn(delta: number) {
+      if (orbit) orbit.angle += delta;
+      requestRender();
     },
     setTheme: applyTheme,
     start() {

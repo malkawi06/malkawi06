@@ -1,33 +1,46 @@
 import "./style.css";
-import Lenis from "lenis";
-import arrowRight from "@phosphor-icons/core/assets/regular/arrow-right.svg?raw";
+import envelope from "@phosphor-icons/core/assets/regular/envelope-simple.svg?raw";
 import download from "@phosphor-icons/core/assets/regular/download-simple.svg?raw";
-import linkedin from "@phosphor-icons/core/assets/regular/linkedin-logo.svg?raw";
 import github from "@phosphor-icons/core/assets/regular/github-logo.svg?raw";
+import linkedin from "@phosphor-icons/core/assets/regular/linkedin-logo.svg?raw";
 import sun from "@phosphor-icons/core/assets/regular/sun.svg?raw";
 import moon from "@phosphor-icons/core/assets/regular/moon.svg?raw";
-import arrowUpRight from "@phosphor-icons/core/assets/regular/arrow-up-right.svg?raw";
+import list from "@phosphor-icons/core/assets/regular/list.svg?raw";
+import xIcon from "@phosphor-icons/core/assets/regular/x.svg?raw";
+import grab from "@phosphor-icons/core/assets/regular/hand-grabbing.svg?raw";
+import caret from "@phosphor-icons/core/assets/regular/caret-down.svg?raw";
+import shield from "@phosphor-icons/core/assets/regular/shield-check.svg?raw";
+import code from "@phosphor-icons/core/assets/regular/code.svg?raw";
+import cpu from "@phosphor-icons/core/assets/regular/cpu.svg?raw";
+import branch from "@phosphor-icons/core/assets/regular/git-branch.svg?raw";
 import copy from "@phosphor-icons/core/assets/regular/copy.svg?raw";
 import check from "@phosphor-icons/core/assets/regular/check.svg?raw";
+import arrowUp from "@phosphor-icons/core/assets/regular/arrow-up.svg?raw";
 import type { Theme } from "./city";
 
 const ICONS: Record<string, string> = {
-  "arrow-right": arrowRight,
+  "envelope-simple": envelope,
   "download-simple": download,
-  "linkedin-logo": linkedin,
   "github-logo": github,
+  "linkedin-logo": linkedin,
   sun,
   moon,
-  "arrow-up-right": arrowUpRight,
+  list,
+  x: xIcon,
+  "hand-grabbing": grab,
+  "caret-down": caret,
+  "shield-check": shield,
+  code,
+  cpu,
+  "git-branch": branch,
   copy,
   check,
+  "arrow-up": arrowUp,
 };
 
 const root = document.documentElement;
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const lowPower =
-  window.matchMedia("(max-width: 767px)").matches ||
-  (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency <= 4);
+const finePointer = window.matchMedia("(pointer: fine)").matches;
 
 /* ---------- Icons ---------- */
 document.querySelectorAll<HTMLElement>("[data-icon]").forEach((el) => {
@@ -38,35 +51,14 @@ document.querySelectorAll<HTMLElement>("[data-icon]").forEach((el) => {
   }
 });
 
-/* ---------- Hero name: split into letters for the reveal ---------- */
-document.querySelectorAll<HTMLElement>("[data-split] .hero__line").forEach((line, li) => {
-  const words = (line.textContent ?? "").trim().split(/\s+/);
-  line.textContent = "";
-  line.setAttribute("aria-hidden", "true");
-  let c = li * 8;
-  words.forEach((word, wi) => {
-    const w = document.createElement("span");
-    w.className = "word";
-    [...word].forEach((ch) => {
-      const s = document.createElement("span");
-      s.className = "char";
-      s.style.setProperty("--c", String(c++));
-      s.textContent = ch;
-      w.appendChild(s);
-    });
-    line.appendChild(w);
-    if (wi < words.length - 1) line.appendChild(document.createTextNode(" "));
-  });
-});
-
 /* ---------- Theme ---------- */
-const currentTheme = (): Theme => (root.getAttribute("data-theme") === "light" ? "light" : "dark");
+const currentTheme = (): Theme => (root.getAttribute("data-theme") === "dark" ? "dark" : "light");
 const themeBtn = document.querySelector<HTMLButtonElement>("[data-theme-toggle]")!;
 const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')!;
 const themeListeners: ((t: Theme) => void)[] = [];
 function syncThemeUI(t: Theme) {
   themeBtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
-  themeMeta.content = t === "dark" ? "#060606" : "#ecedeb";
+  themeMeta.content = t === "dark" ? "#111113" : "#f5f5f1";
 }
 syncThemeUI(currentTheme());
 themeBtn.addEventListener("click", () => {
@@ -81,60 +73,46 @@ themeBtn.addEventListener("click", () => {
   themeListeners.forEach((fn) => fn(next));
 });
 
-/* ---------- Smooth scroll ---------- */
-const lenis = reducedMotion ? null : new Lenis({ autoRaf: true, lerp: 0.085, wheelMultiplier: 0.9 });
-const navH = () => (document.querySelector<HTMLElement>("[data-nav]")?.offsetHeight ?? 76) + 8;
+/* ---------- Nav ---------- */
+const nav = document.querySelector<HTMLElement>("[data-nav]")!;
+const sentinel = document.createElement("div");
+sentinel.style.cssText = "position:absolute;top:0;left:0;height:8px;width:1px;pointer-events:none";
+document.body.prepend(sentinel);
+new IntersectionObserver(([e]) => nav.classList.toggle("is-scrolled", !e.isIntersecting)).observe(sentinel);
 
-function scrollToHash(hash: string) {
-  const el = hash === "#top" ? document.body : document.querySelector<HTMLElement>(hash);
-  if (!el) return;
-  if (lenis) lenis.scrollTo(hash === "#top" ? 0 : el, { offset: -navH(), duration: 1.6 });
-  else el.scrollIntoView({ block: "start" });
-}
-document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
-  a.addEventListener("click", (e) => {
-    const hash = a.getAttribute("href")!;
-    if (hash.length < 2 || hash === "#main") return;
-    e.preventDefault();
-    closeMenu();
-    scrollToHash(hash);
-  });
-});
-
-/* ---------- Mobile menu ---------- */
 const menu = document.querySelector<HTMLElement>("[data-menu]")!;
 const menuBtn = document.querySelector<HTMLButtonElement>("[data-menu-toggle]")!;
-function openMenu() {
-  menu.hidden = false;
-  menuBtn.setAttribute("aria-expanded", "true");
-  menuBtn.querySelector(".menu-btn__label")!.textContent = "Close";
-  lenis?.stop();
-  menu.querySelector<HTMLAnchorElement>("a")?.focus();
+function setMenu(open: boolean) {
+  menu.hidden = !open;
+  menuBtn.setAttribute("aria-expanded", String(open));
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
 }
-function closeMenu() {
-  if (menu.hidden) return;
-  menu.hidden = true;
-  menuBtn.setAttribute("aria-expanded", "false");
-  menuBtn.querySelector(".menu-btn__label")!.textContent = "Menu";
-  lenis?.start();
-}
-menuBtn.addEventListener("click", () => (menu.hidden ? openMenu() : closeMenu()));
+menuBtn.addEventListener("click", () => setMenu(Boolean(menu.hidden)));
+menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !menu.hidden) {
-    closeMenu();
+    setMenu(false);
     menuBtn.focus();
   }
 });
 
-/* ---------- Nav state ---------- */
-const nav = document.querySelector<HTMLElement>("[data-nav]")!;
-const sentinel = document.createElement("div");
-sentinel.style.cssText = "position:absolute;top:0;left:0;height:40px;width:1px;pointer-events:none";
-document.body.prepend(sentinel);
-new IntersectionObserver(([e]) => nav.classList.toggle("is-scrolled", !e.isIntersecting)).observe(sentinel);
 const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(".nav__links a"));
+const activeIO = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      const id = (e.target as HTMLElement).id;
+      navLinks.forEach((a) => a.setAttribute("aria-current", String(a.hash === `#${id}`)));
+    });
+  },
+  { rootMargin: "-40% 0px -55% 0px" },
+);
+["about", "projects", "leadership", "toolkit", "contact"].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) activeIO.observe(el);
+});
 
-/* ---------- Reveal on scroll ---------- */
+/* ---------- Reveal ---------- */
 const revealIO = new IntersectionObserver(
   (entries) => {
     entries.forEach((e) => {
@@ -143,11 +121,11 @@ const revealIO = new IntersectionObserver(
       revealIO.unobserve(e.target);
     });
   },
-  { rootMargin: "0px 0px -3% 0px", threshold: 0.04 },
+  { rootMargin: "0px 0px -6% 0px", threshold: 0.05 },
 );
 document.querySelectorAll(".reveal").forEach((el) => revealIO.observe(el));
 
-/* ---------- Count-up numbers ---------- */
+/* ---------- Count-up ---------- */
 const countIO = new IntersectionObserver(
   (entries) => {
     entries.forEach((e) => {
@@ -157,13 +135,11 @@ const countIO = new IntersectionObserver(
       const to = Number(el.dataset.count);
       if (reducedMotion || !to) return;
       const t0 = performance.now();
-      const dur = 1600;
       const tick = (now: number) => {
-        const k = Math.min(1, (now - t0) / dur);
-        el.textContent = String(Math.round(to * (1 - Math.pow(1 - k, 4))));
+        const k = Math.min(1, (now - t0) / 1300);
+        el.textContent = String(Math.round(to * (1 - Math.pow(1 - k, 3))));
         if (k < 1) requestAnimationFrame(tick);
       };
-      el.textContent = "0";
       requestAnimationFrame(tick);
     });
   },
@@ -173,227 +149,107 @@ document.querySelectorAll<HTMLElement>("[data-count]").forEach((el) => countIO.o
 
 /* ---------- Copy email ---------- */
 document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
-  const toast = btn.parentElement?.querySelector<HTMLElement>("[data-toast]");
+  const toast = document.querySelector<HTMLElement>("[data-toast]");
+  const label = btn.querySelector<HTMLElement>("[data-copy-label]");
   btn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(btn.dataset.copy!);
       btn.classList.add("is-copied");
-      if (toast) toast.textContent = "Copied";
+      if (label) label.textContent = "Copied";
+      if (toast) toast.textContent = "Email address copied.";
     } catch {
-      const link = btn.parentElement?.querySelector("a");
-      if (link) window.getSelection()?.selectAllChildren(link);
-      if (toast) toast.textContent = "Selected. Press Ctrl+C to copy.";
+      const addr = document.querySelector(".contact__addr");
+      if (addr) window.getSelection()?.selectAllChildren(addr);
+      if (toast) toast.textContent = "Address selected. Press Ctrl+C to copy it.";
     }
     window.setTimeout(() => {
       btn.classList.remove("is-copied");
+      if (label) label.textContent = "Copy";
       if (toast) toast.textContent = "";
     }, 2400);
   });
 });
 
-/* ---------- Active nav link ---------- */
-const sectionIds = ["work", "leadership", "skills", "contact"];
-const activeIO = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      const id = (e.target as HTMLElement).id;
-      navLinks.forEach((a) => a.setAttribute("aria-current", String(a.hash === `#${id}`)));
-    });
-  },
-  { rootMargin: "-45% 0px -50% 0px" },
-);
-sectionIds.forEach((id) => {
-  const el = document.getElementById(id);
-  if (el) activeIO.observe(el);
-});
-
-/* ---------- Intro + city ---------- */
-const loader = document.querySelector<HTMLElement>("[data-loader]")!;
-const bar = document.querySelector<HTMLElement>("[data-loader-bar]")!;
-const count = document.querySelector<HTMLElement>("[data-loader-count]")!;
-const skipBtn = document.querySelector<HTMLButtonElement>("[data-loader-skip]")!;
-
-let seen = false;
-try {
-  seen = sessionStorage.getItem("intro-seen") === "1";
-  sessionStorage.setItem("intro-seen", "1");
-} catch {
-  /* no storage: play the full intro */
-}
-
-let progressTarget = 0;
-let progressShown = 0;
-let skipped = false;
-function tickProgress() {
-  progressShown += (progressTarget - progressShown) * 0.12;
-  if (progressTarget - progressShown < 0.4) progressShown = progressTarget;
-  bar.style.transform = `scaleX(${progressShown / 100})`;
-  count.textContent = String(Math.round(progressShown)).padStart(3, "0");
-  if (progressShown < 100) requestAnimationFrame(tickProgress);
-}
-requestAnimationFrame(tickProgress);
-
-function finishLoader() {
-  loader.classList.add("is-done");
-  window.setTimeout(() => loader.remove(), 1300);
-}
-function reveal() {
-  root.classList.add("is-ready");
-}
-
-type City = ReturnType<typeof import("./city").createCity>;
-let city: City | null = null;
-
-// Camera choreography: every section with data-shot is an anchor on the flight path.
-const shotEls = Array.from(document.querySelectorAll<HTMLElement>("[data-shot]"));
-let anchors: { y: number; shot: string }[] = [];
-function measureAnchors() {
-  const vh = window.innerHeight;
-  anchors = shotEls.map((el) => {
-    const r = el.getBoundingClientRect();
-    const top = r.top + window.scrollY;
-    // the shot is "fully on" when the section's upper third reaches the middle of the screen
-    return { y: Math.max(0, top + Math.min(r.height * 0.33, vh * 0.5) - vh * 0.5), shot: el.dataset.shot! };
+/* ---------- Hero tilt ---------- */
+const art = document.querySelector<HTMLElement>("[data-tilt]");
+if (art && finePointer && !reducedMotion) {
+  const hero = art.closest("section")!;
+  hero.addEventListener("pointermove", (e) => {
+    const r = art.getBoundingClientRect();
+    const x = (e.clientX - (r.left + r.width / 2)) / r.width;
+    const y = (e.clientY - (r.top + r.height / 2)) / r.height;
+    art.style.setProperty("--ry", `${(x * 5).toFixed(2)}deg`);
+    art.style.setProperty("--rx", `${(-y * 4).toFixed(2)}deg`);
   });
-  anchors[0].y = 0;
-}
-function currentShotPair(scrollY: number) {
-  if (!anchors.length) return { a: "hero", b: "hero", t: 0 };
-  for (let i = anchors.length - 1; i >= 0; i--) {
-    if (scrollY >= anchors[i].y) {
-      const next = anchors[i + 1];
-      if (!next) return { a: anchors[i].shot, b: anchors[i].shot, t: 0 };
-      const t = (scrollY - anchors[i].y) / Math.max(1, next.y - anchors[i].y);
-      return { a: anchors[i].shot, b: next.shot, t };
-    }
-  }
-  return { a: anchors[0].shot, b: anchors[0].shot, t: 0 };
-}
-function updateCamera(scrollY: number) {
-  if (!city) return;
-  const { a, b, t } = currentShotPair(scrollY);
-  city.setShot(a, b, t);
+  hero.addEventListener("pointerleave", () => {
+    art.style.setProperty("--ry", "0deg");
+    art.style.setProperty("--rx", "0deg");
+  });
 }
 
-async function boot() {
-  const minTime = reducedMotion ? 0 : seen ? 500 : 1500;
-  const t0 = performance.now();
-  progressTarget = 18;
-
-  const fontsReady = document.fonts?.ready ?? Promise.resolve();
-  const cityModule = import("./city");
-  await fontsReady;
-  progressTarget = 42;
-  const { createCity, webglAvailable, SHOTS } = await cityModule;
-  progressTarget = 70;
-
-  if (webglAvailable()) {
-    try {
-      city = createCity({
-        canvas: document.querySelector<HTMLCanvasElement>("[data-city]")!,
-        theme: currentTheme(),
-        reducedMotion,
-        lowPower,
-      });
-      city.warm();
-      themeListeners.push((t) => city?.setTheme(t));
-    } catch {
-      city = null;
-      root.classList.add("no-webgl");
-    }
-  } else {
+/* ---------- 3D frames ---------- */
+async function init3D() {
+  const cityCanvas = document.querySelector<HTMLCanvasElement>("[data-city-canvas]");
+  const cartCanvas = document.querySelector<HTMLCanvasElement>("[data-cart-canvas]");
+  if (!cityCanvas || !cartCanvas) return;
+  const [{ createCity, webglAvailable }, { createCartridge }] = await Promise.all([import("./city"), import("./cartridge")]);
+  if (!webglAvailable()) {
     root.classList.add("no-webgl");
-  }
-  progressTarget = 100;
-
-  measureAnchors();
-  window.addEventListener(
-    "resize",
-    () => {
-      measureAnchors();
-      updateCamera(lenis ? lenis.scroll : window.scrollY);
-    },
-    { passive: true },
-  );
-  new ResizeObserver(() => measureAnchors()).observe(document.body);
-
-  const wait = Math.max(0, minTime - (performance.now() - t0));
-  if (!skipped) {
-    await Promise.race([
-      new Promise((r) => window.setTimeout(r, wait + (reducedMotion ? 0 : 350))),
-      skipSignal,
-    ]);
+    return;
   }
 
-  finishLoader();
-  city?.start();
-
-  // camera: fly down from the sky to the current shot
-  const shotNow = () => {
-    const { a, b, t } = currentShotPair(lenis ? lenis.scroll : window.scrollY);
-    const A = SHOTS[a];
-    const B = SHOTS[b];
-    const k = t * t * (3 - 2 * t);
-    const mix = (p: number[], q: number[]) => p.map((v, i) => v + (q[i] - v) * k) as [number, number, number];
-    return { pos: mix(A.pos, B.pos), target: mix(A.target, B.target) };
-  };
-  const flight = skipped || reducedMotion ? 0 : seen ? 1500 : 2800;
-  window.setTimeout(reveal, flight * 0.45);
-  if (city) {
-    await city.playIntro(flight, shotNow);
-    updateCamera(lenis ? lenis.scroll : window.scrollY);
-  } else {
-    reveal();
-  }
-
-  if (lenis) {
-    lenis.on("scroll", (l: Lenis) => updateCamera(l.scroll));
-  } else {
-    // reduced motion: jump between shots as sections come into view
-    const snapIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) city?.setShot((e.target as HTMLElement).dataset.shot!, (e.target as HTMLElement).dataset.shot!, 0);
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    shotEls.forEach((el) => snapIO.observe(el));
-  }
-
-  if (!reducedMotion && city) {
-    window.addEventListener(
-      "pointermove",
-      (e) => city?.setPointer((e.clientX / window.innerWidth) * 2 - 1, (e.clientY / window.innerHeight) * 2 - 1),
-      { passive: true },
-    );
-  }
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) city?.stop();
-    else city?.start();
+  const city = createCity({ canvas: cityCanvas, theme: currentTheme(), reducedMotion, lowPower: true });
+  city.setOrbit({ cx: 0, cz: 0, radius: 30, height: 23, speed: 0.07 });
+  const cart = createCartridge(cartCanvas, currentTheme(), reducedMotion);
+  themeListeners.push((t) => {
+    city.setTheme(t);
+    cart.setTheme(t);
   });
+
+  // drag to rotate the city model
+  let dragX: number | null = null;
+  cityCanvas.addEventListener("pointerdown", (e) => {
+    dragX = e.clientX;
+    cityCanvas.setPointerCapture(e.pointerId);
+  });
+  cityCanvas.addEventListener("pointermove", (e) => {
+    if (dragX === null) return;
+    city.turn((e.clientX - dragX) * -0.008);
+    dragX = e.clientX;
+  });
+  const endDrag = () => (dragX = null);
+  cityCanvas.addEventListener("pointerup", endDrag);
+  cityCanvas.addEventListener("pointercancel", endDrag);
+  cityCanvas.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") city.turn(0.15);
+    if (e.key === "ArrowRight") city.turn(-0.15);
+  });
+  cityCanvas.tabIndex = 0;
+
+  // only animate while the hero is on screen and the tab is visible
+  let visible = true;
+  const sync = () => {
+    if (visible && !document.hidden) {
+      city.start();
+      cart.start();
+    } else {
+      city.stop();
+      cart.stop();
+    }
+  };
+  new IntersectionObserver(([e]) => {
+    visible = e.isIntersecting;
+    sync();
+  }).observe(cityCanvas.closest(".hero__art")!);
+  document.addEventListener("visibilitychange", sync);
+  city.warm();
+  sync();
 }
 
-let onSkip: () => void = () => {};
-const skipSignal = new Promise<void>((r) => (onSkip = r));
-skipBtn.addEventListener("click", () => {
-  skipped = true;
-  progressTarget = 100;
-  progressShown = 100;
-  onSkip();
-});
-
-// Safety net: never leave a visitor stuck behind the loader.
-window.setTimeout(() => {
-  if (!root.classList.contains("is-ready")) {
-    finishLoader();
-    reveal();
-  }
-}, 9000);
-
-boot().catch(() => {
-  root.classList.add("no-webgl");
-  finishLoader();
-  reveal();
+const idle = (cb: () => void) => {
+  if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(cb, { timeout: 700 });
+  else setTimeout(cb, 150);
+};
+idle(() => {
+  init3D().catch(() => root.classList.add("no-webgl"));
 });

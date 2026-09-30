@@ -8,15 +8,15 @@
       name="description"
       content="Mohammad H. Malkawi, Computer Networks and Cybersecurity student at Jadara University in Irbid, Jordan. Adaptive traffic control, autonomous carbon capture and IEEE student leadership."
     />
-    <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#060606" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23060606'/%3E%3Cpath d='M6 24V8l10 9 10-9v16' fill='none' stroke='%23f2b23e' stroke-width='2.6'/%3E%3C/svg%3E" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f5f1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316161a'/%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='%23f2a516'/%3E%3Crect x='17' y='17' width='8' height='8' rx='2' fill='%23f5f5f1'/%3E%3C/svg%3E" />
     <script>
       (function () {
         var d = document.documentElement, t, h = d.getAttribute("data-theme");
         try { t = localStorage.getItem("theme"); } catch (e) {}
         if (t !== "light" && t !== "dark") t = h === "light" || h === "dark" ? h : null;
-        if (!t) t = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
         d.setAttribute("data-theme", t);
         d.classList.add("js");
       })();
@@ -25,299 +25,286 @@
   <body>
     <a class="skip" href="#main">Skip to Content</a>
 
-    <!-- Intro -->
-    <div class="loader" data-loader>
-      <div class="loader__inner" aria-hidden="true">
-        <p class="loader__mark">Malkawi</p>
-        <div class="loader__bar"><i data-loader-bar></i></div>
-        <div class="loader__row">
-          <span>Loading the city</span>
-          <span class="loader__count" data-loader-count>000</span>
-        </div>
-      </div>
-      <button class="loader__skip" type="button" data-loader-skip>Skip Intro</button>
-    </div>
-
-    <!-- 3D city, fixed behind the page -->
-    <canvas class="city" data-city aria-hidden="true"></canvas>
-    <div class="city-veil" aria-hidden="true"></div>
-
     <header class="nav" data-nav>
       <div class="nav__inner wrap">
-        <a class="nav__brand" href="#top" aria-label="Mohammad H. Malkawi, back to top" translate="no">Malkawi</a>
+        <a class="brand" href="#top" aria-label="Mohammad H. Malkawi, back to top">
+          <span class="brand__mark" aria-hidden="true"><i></i><i></i></span>
+          <span translate="no">Malkawi</span>
+        </a>
         <nav class="nav__links" aria-label="Sections">
-          <a href="#work">Work</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
           <a href="#leadership">Leadership</a>
-          <a href="#skills">Skills</a>
+          <a href="#toolkit">Toolkit</a>
           <a href="#contact">Contact</a>
         </nav>
         <div class="nav__actions">
-          <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to light theme">
-            <span data-icon="sun" class="only-dark"></span>
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to dark theme">
             <span data-icon="moon" class="only-light"></span>
+            <span data-icon="sun" class="only-dark"></span>
           </button>
-          <a class="btn btn--gold btn--sm nav__cta" href="mailto:malkawimohammadh@gmail.com">Email Me</a>
-          <button class="menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu">
-            <span class="menu-btn__label">Menu</span>
-            <span class="menu-btn__icon" aria-hidden="true"><i></i><i></i></span>
+          <a class="btn btn--primary btn--sm nav__cta" href="mailto:malkawimohammadh@gmail.com">Email Me</a>
+          <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+            <span data-icon="list" class="menu-open"></span>
+            <span data-icon="x" class="menu-close"></span>
           </button>
         </div>
       </div>
-    </header>
-
-    <div class="menu" id="menu" data-menu hidden>
-      <nav class="menu__links wrap" aria-label="Sections">
-        <a href="#work">Work</a>
+      <nav class="menu wrap" id="menu" data-menu hidden aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
         <a href="#leadership">Leadership</a>
-        <a href="#skills">Skills</a>
+        <a href="#toolkit">Toolkit</a>
         <a href="#contact">Contact</a>
       </nav>
-    </div>
+    </header>
 
     <main id="main">
       <!-- HERO -->
-      <section class="hero" id="top" data-shot="hero">
-        <div class="wrap hero__inner">
-          <p class="hero__role reveal-up">Computer Networks &amp; Cybersecurity, Jadara University</p>
-          <h1 class="hero__name" aria-label="Mohammad H. Malkawi" data-split>
-            <span class="hero__line">Mohammad H.</span>
-            <span class="hero__line">Malkawi</span>
+      <section class="hero wrap" id="top">
+        <div class="hero__copy">
+          <p class="hero__hello reveal">Hi, I'm <strong>Mohammad H. Malkawi</strong></p>
+          <h1 class="hero__title reveal" style="--i: 1">
+            Networks &amp; security student, building <span class="hl">smarter infrastructure.</span>
           </h1>
-          <p class="hero__lede reveal-up" style="--d: 1">
-            I design systems that let infrastructure respond on its own. Traffic signals that follow
-            real demand. Carbon capture that keeps the plant running.
+          <p class="hero__lede reveal" style="--i: 2">
+            Third year at Jadara University in Irbid. I design systems that bring AI into the physical
+            world, from traffic signals that follow real demand to carbon capture that never stops the
+            plant. Vice Chair of IEEE Jadara Student Branch.
           </p>
-          <div class="hero__ctas reveal-up" style="--d: 2">
-            <a class="btn btn--gold" href="mailto:malkawimohammadh@gmail.com">
-              Email Me<span data-icon="arrow-right"></span>
+          <div class="hero__ctas reveal" style="--i: 3">
+            <a class="btn btn--primary" href="mailto:malkawimohammadh@gmail.com">
+              <span data-icon="envelope-simple"></span>Email Me
             </a>
-            <a class="btn btn--ghost" href="./Mohammad-H-Malkawi-CV.pdf" download>
+            <a class="btn btn--secondary" href="./Mohammad-H-Malkawi-CV.pdf" download>
               <span data-icon="download-simple"></span>Download CV
             </a>
+          </div>
+          <ul class="hero__social reveal" style="--i: 4" aria-label="Profiles">
+            <li><a href="https://github.com/malkawi06" target="_blank" rel="noopener" aria-label="GitHub"><span data-icon="github-logo"></span></a></li>
+            <li><a href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365" target="_blank" rel="noopener" aria-label="LinkedIn"><span data-icon="linkedin-logo"></span></a></li>
+            <li><a href="mailto:malkawimohammadh@gmail.com" aria-label="Email"><span data-icon="envelope-simple"></span></a></li>
+            <li class="hero__status"><span class="dot" aria-hidden="true"></span>Open to internships</li>
+          </ul>
+        </div>
+
+        <div class="hero__art" data-tilt>
+          <figure class="frame frame--city">
+            <canvas data-city-canvas role="img" aria-label="3D city built around a roundabout, inspired by SALKA"></canvas>
+            <figcaption><span data-icon="hand-grabbing"></span><span class="cap-long">SALKA city model.&nbsp;</span>Drag to rotate</figcaption>
+          </figure>
+          <figure class="frame frame--cart">
+            <canvas data-cart-canvas role="img" aria-label="3D C-Layer filter stack with one layer sliding out"></canvas>
+            <figcaption>C-Layer filter swap</figcaption>
+          </figure>
+          <div class="frame frame--stat">
+            <p class="frame__num">15%</p>
+            <p class="frame__txt">less waiting time in the SALKA simulation</p>
           </div>
         </div>
       </section>
 
-      <!-- PROFILE -->
-      <section class="profile" id="profile" data-shot="profile" aria-labelledby="profile-h">
-        <div class="wrap">
-          <h2 id="profile-h" class="visually-hidden">Profile</h2>
-          <p class="statement reveal">
-            Third year at Jadara University, studying how data moves across networks and how to keep
-            it safe. Outside class I lead IEEE programs and design systems that bring
-            <em>AI into physical infrastructure.</em>
+      <!-- ABOUT -->
+      <section class="section wrap" id="about" aria-labelledby="about-h">
+        <header class="section__head">
+          <p class="section__num">01 <span>About</span></p>
+          <h2 id="about-h" class="reveal">Systems That Work in the Real World</h2>
+        </header>
+        <div class="about">
+          <p class="about__text reveal">
+            I study how data moves across networks and how to keep it safe. Most of what I build sits
+            where networking meets physical infrastructure: roads, factories and the sensors that
+            watch them. I like projects with a clear problem, real constraints and a result you can
+            measure.
           </p>
           <dl class="facts">
-            <div class="reveal" style="--i: 0"><dt>Based in</dt><dd>Irbid, Jordan. Open to remote work.</dd></div>
-            <div class="reveal" style="--i: 1"><dt>Studying</dt><dd>B.Sc. Computer Networks &amp; Cybersecurity</dd></div>
-            <div class="reveal" style="--i: 2"><dt>Graduating</dt><dd>January 2028, expected</dd></div>
-            <div class="reveal" style="--i: 3"><dt>Currently</dt><dd>Vice Chair, IEEE Jadara Student Branch</dd></div>
-            <div class="reveal" style="--i: 4"><dt>Languages</dt><dd>Arabic, native. English, professional.</dd></div>
+            <div class="card fact reveal" style="--i: 0"><dt>Studying</dt><dd>B.Sc. Computer Networks &amp; Cybersecurity, Jadara University</dd></div>
+            <div class="card fact reveal" style="--i: 1"><dt>Graduating</dt><dd>January 2028, expected</dd></div>
+            <div class="card fact reveal" style="--i: 2"><dt>Based in</dt><dd>Irbid, Jordan. Open to remote work.</dd></div>
+            <div class="card fact reveal" style="--i: 3"><dt>Languages</dt><dd>Arabic, native. English, professional.</dd></div>
           </dl>
         </div>
       </section>
 
-      <!-- WORK -->
-      <div id="work">
-        <section class="chapter" data-shot="salka" aria-labelledby="ch-salka">
-          <div class="wrap">
-            <h2 class="chapter__title reveal" id="ch-salka">Culture Circle,<br />Irbid</h2>
-            <p class="chapter__sub reveal" style="--i: 1">Where SALKA starts.</p>
-          </div>
-        </section>
+      <!-- PROJECTS -->
+      <section class="section wrap" id="projects" aria-labelledby="projects-h">
+        <header class="section__head">
+          <p class="section__num">02 <span>Projects</span></p>
+          <h2 id="projects-h" class="reveal">Selected Work</h2>
+        </header>
 
-        <article class="case" data-shot="salkaDeep" aria-labelledby="salka-h">
-          <div class="wrap">
-            <div class="panel case__panel">
-              <header class="case__head">
-                <div class="reveal">
-                  <h3 class="case__title" id="salka-h" translate="no">SALKA</h3>
-                  <p class="case__kicker">Adaptive traffic control for Irbid</p>
-                </div>
-                <dl class="meta reveal" style="--i: 1">
-                  <div><dt>Role</dt><dd>System design &amp; research</dd></div>
-                  <div><dt>Team</dt><dd translate="no">SYNTRA</dd></div>
-                  <div><dt>Type</dt><dd>Self-initiated</dd></div>
-                  <div><dt>Stack</dt><dd>Python, SUMO, TraCI, OpenStreetMap</dd></div>
-                </dl>
-              </header>
-
-              <div class="case__body">
-                <p class="lead reveal">
-                  Most traffic lights in Jordan run on fixed timers, blind to the queue in front of them.
-                  SALKA rebuilds Culture Circle as a digital twin in SUMO and retimes each green phase to
-                  the traffic that is actually there, with priority for emergency vehicles.
-                </p>
-                <figure class="stat reveal" style="--i: 1">
-                  <p class="stat__num"><span data-count="15">15</span><small>%</small></p>
-                  <figcaption>Up to 15% less average waiting time, measured in simulation</figcaption>
-                </figure>
-              </div>
-
-              <ol class="flow" aria-label="How SALKA works">
-                <li class="reveal" style="--i: 0"><b>Model</b><span>Road network pulled from OpenStreetMap into SUMO.</span></li>
-                <li class="reveal" style="--i: 1"><b>Simulate</b><span>Peak-hour scenarios with cars, buses and congestion events.</span></li>
-                <li class="reveal" style="--i: 2"><b>Sense</b><span>Queues, waiting times and occupancy read live through TraCI.</span></li>
-                <li class="reveal" style="--i: 3"><b>Adapt</b><span>Longer greens for congested approaches. Ambulances first.</span></li>
-              </ol>
-
-              <div class="layers" aria-label="SALKA architecture">
-                <div class="layers__row reveal" style="--i: 0"><b>User layer</b><span>Citizen app for routes, bus tracking and arrival times, plus an operator dashboard with congestion heatmaps.</span></div>
-                <div class="layers__row reveal" style="--i: 1"><b>Intelligence layer</b><span>Traffic analysis, adaptive signal control, route optimization and data fusion.</span></div>
-                <div class="layers__row reveal" style="--i: 2"><b>Data layer</b><span>Vehicle counts, queue lengths, bus GPS, simulation output and emergency requests.</span></div>
-              </div>
+        <div class="projects">
+          <article class="card project reveal" aria-labelledby="salka-h">
+            <div class="project__media">
+              <img src="./img/salka-light.webp" alt="Stylized 3D city around a roundabout with traffic flowing" width="1200" height="750" loading="lazy" class="only-light" />
+              <img src="./img/salka-dark.webp" alt="Stylized 3D city at night around a roundabout with traffic light trails" width="1200" height="750" loading="lazy" class="only-dark" />
             </div>
-          </div>
-        </article>
-
-        <section class="chapter chapter--right" data-shot="clayer" aria-labelledby="ch-clayer">
-          <div class="wrap">
-            <h2 class="chapter__title reveal" id="ch-clayer">Cement.<br />Steel. Power.</h2>
-            <p class="chapter__sub reveal" style="--i: 1">The stacks C-Layer is designed for.</p>
-          </div>
-        </section>
-
-        <article class="case" data-shot="clayerDeep" aria-labelledby="clayer-h">
-          <div class="wrap">
-            <div class="panel case__panel">
-              <header class="case__head">
-                <div class="reveal">
-                  <h3 class="case__title" id="clayer-h" translate="no">C-Layer</h3>
-                  <p class="case__kicker">Autonomous CO₂ capture for heavy industry</p>
-                </div>
-                <dl class="meta reveal" style="--i: 1">
-                  <div><dt>Role</dt><dd>Sole designer, end to end</dd></div>
-                  <div><dt>Status</dt><dd>Concept design and research. No prototype built yet.</dd></div>
-                  <div class="meta__wide"><dt>Core</dt><dd>NVIDIA Jetson Nano, LSTM, NEMA 23 and 34 steppers, 316L stainless steel</dd></div>
-                </dl>
-              </header>
-
-              <div class="case__body case__body--flip">
-                <p class="lead reveal">
-                  Capture filters on cement and steel stacks saturate, and swapping them by hand means
-                  stopping the furnace. C-Layer is my design for a four-layer capture system where a robot
-                  replaces each saturated filter while the plant keeps running.
-                </p>
-                <div class="cartridge reveal" style="--i: 1">
-                  <div class="cartridge__scene" aria-hidden="true">
-                    <div class="cartridge__stack">
-                      <i class="plate plate--support"></i>
-                      <i class="plate plate--chem"></i>
-                      <i class="plate plate--chem"></i>
-                      <i class="plate plate--pre"></i>
-                    </div>
-                  </div>
-                  <ol class="cartridge__legend" aria-label="Filter layers, top to bottom">
-                    <li><b>Pre-filtration</b>Strips dust and large particles.</li>
-                    <li class="is-chem"><b>Absorption I</b>MEA bonded to multi-walled carbon nanotubes.</li>
-                    <li class="is-chem"><b>Absorption II</b>A second MEA and CNT stage.</li>
-                    <li><b>Support</b>Holds the stack against heat and pressure.</li>
-                  </ol>
-                </div>
+            <div class="project__body">
+              <div class="project__top">
+                <h3 id="salka-h" translate="no">SALKA</h3>
+                <p class="chip chip--accent">Up to 15% less waiting</p>
               </div>
-
-              <div>
-              <h4 class="targets__title reveal">Design targets</h4>
-              <ul class="targets">
-                <li class="reveal" style="--i: 0"><strong>~20&nbsp;s</strong><span>Robotic filter swap, planned with no plant shutdown</span></li>
-                <li class="reveal" style="--i: 1"><strong>870°C</strong><span>Stack heat handled with reflective shields, aerogel and vortex-tube cooling</span></li>
-                <li class="reveal" style="--i: 2"><strong>RUL</strong><span>An LSTM on the Jetson predicts remaining filter life from CO₂, pressure and heat</span></li>
-                <li class="reveal" style="--i: 3"><strong>Fail-safe</strong><span>A spring-return bypass damper opens on power loss to protect the furnace</span></li>
+              <p class="project__kicker">Adaptive traffic control for Irbid</p>
+              <p class="project__desc">
+                Most traffic lights in Jordan run on fixed timers. SALKA rebuilds Culture Circle in Irbid
+                as a digital twin in SUMO and retimes green phases to the real queues, with priority for
+                emergency vehicles.
+              </p>
+              <dl class="project__meta">
+                <div><dt>Role</dt><dd>System design &amp; research</dd></div>
+                <div><dt>Team</dt><dd translate="no">SYNTRA</dd></div>
+                <div><dt>Type</dt><dd>Self-initiated</dd></div>
+              </dl>
+              <ul class="tags" aria-label="Tools">
+                <li>Python</li><li>SUMO</li><li>TraCI</li><li>OpenStreetMap</li>
               </ul>
-              </div>
+              <details class="more">
+                <summary>How It Works <span data-icon="caret-down"></span></summary>
+                <ol class="steps">
+                  <li><b>Model.</b> Culture Circle's road network pulled from OpenStreetMap into SUMO.</li>
+                  <li><b>Simulate.</b> Peak-hour scenarios with cars, buses and congestion events.</li>
+                  <li><b>Sense.</b> Queues, waiting times and occupancy read live through TraCI in Python.</li>
+                  <li><b>Adapt.</b> Longer greens for congested approaches, and emergency vehicles go first.</li>
+                </ol>
+                <p class="more__note">Result: up to 15% lower average waiting time, measured in simulation.</p>
+              </details>
             </div>
-          </div>
-        </article>
-      </div>
+          </article>
 
-      <!-- LEADERSHIP -->
-      <section class="lead-hero" id="leadership" data-shot="leadership" aria-labelledby="lead-h">
-        <div class="wrap">
-          <h2 class="lead-hero__title reveal" id="lead-h" translate="no">RoboCraft</h2>
-          <p class="lead-hero__sub reveal" style="--i: 1">
-            A national robotics competition on smart solutions, run by our IEEE RAS chapter at Jadara
-            University on 6 January 2026.
-          </p>
-          <ul class="numbers" aria-label="RoboCraft and chapter in numbers">
-            <li class="reveal" style="--i: 0"><strong data-count="110">110</strong><span>Teams registered</span></li>
-            <li class="reveal" style="--i: 1"><strong>~<b data-count="300">300</b></strong><span>Participants</span></li>
-            <li class="reveal" style="--i: 2"><strong data-count="16">16</strong><span>Universities</span></li>
-            <li class="reveal" style="--i: 3"><strong>~<b data-count="30">30</b></strong><span>Chapter workshops &amp; events</span></li>
-          </ul>
+          <article class="card project reveal" style="--i: 1" aria-labelledby="clayer-h">
+            <div class="project__media">
+              <img src="./img/clayer-light.webp" alt="3D render of the C-Layer four-layer filter stack" width="1200" height="750" loading="lazy" class="only-light" />
+              <img src="./img/clayer-dark.webp" alt="3D render of the C-Layer four-layer filter stack on a dark background" width="1200" height="750" loading="lazy" class="only-dark" />
+            </div>
+            <div class="project__body">
+              <div class="project__top">
+                <h3 id="clayer-h" translate="no">C-Layer</h3>
+                <p class="chip">Concept design</p>
+              </div>
+              <p class="project__kicker">Autonomous CO₂ capture for heavy industry</p>
+              <p class="project__desc">
+                Swapping saturated capture filters on cement and steel stacks usually means stopping the
+                furnace. I designed a four-layer system where a robot replaces each saturated filter
+                while the plant keeps running.
+              </p>
+              <dl class="project__meta">
+                <div><dt>Role</dt><dd>Sole designer</dd></div>
+                <div><dt>Status</dt><dd>No prototype built yet</dd></div>
+                <div><dt>Type</dt><dd>Self-initiated</dd></div>
+              </dl>
+              <ul class="tags" aria-label="Technologies">
+                <li>NVIDIA Jetson Nano</li><li>LSTM</li><li>NEMA 23/34</li><li>316L steel</li>
+              </ul>
+              <details class="more">
+                <summary>Design Targets <span data-icon="caret-down"></span></summary>
+                <ul class="steps">
+                  <li><b>~20&nbsp;s filter swap.</b> Planned with no plant shutdown.</li>
+                  <li><b>Four layers.</b> Pre-filtration, two MEA and carbon-nanotube absorption stages, and a structural support layer.</li>
+                  <li><b>Predictive.</b> An LSTM on the Jetson estimates remaining filter life from CO₂, pressure and heat.</li>
+                  <li><b>Built for 870°C.</b> Reflective shields, aerogel insulation and vortex-tube cooling.</li>
+                  <li><b>Fail-safe.</b> A spring-return bypass damper opens on power loss to protect the furnace.</li>
+                </ul>
+              </details>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class="roles-sec" data-shot="leadership" aria-label="Roles">
-        <div class="wrap">
-          <div class="panel roles">
-            <div class="role reveal">
-              <p class="role__when">Now</p>
+      <!-- LEADERSHIP -->
+      <section class="section wrap" id="leadership" aria-labelledby="lead-h">
+        <header class="section__head">
+          <p class="section__num">03 <span>Leadership</span></p>
+          <h2 id="lead-h" class="reveal">IEEE at Jadara University</h2>
+        </header>
+
+        <div class="lead">
+          <div class="lead__side">
+            <div class="card robocraft reveal">
+              <h3 translate="no">RoboCraft</h3>
+              <p>A national robotics competition on smart solutions, organized by our IEEE RAS chapter on 6 January 2026.</p>
+              <ul class="stats">
+                <li><strong data-count="110">110</strong><span>teams registered</span></li>
+                <li><strong>~<b data-count="300">300</b></strong><span>participants</span></li>
+                <li><strong data-count="16">16</strong><span>universities</span></li>
+              </ul>
+            </div>
+            <aside class="note reveal" style="--i: 1">
+              <p class="note__k">What this shows</p>
+              <p>Running a competition this size on a fixed date meant planning the logistics, bringing partners on board and keeping a 7-person team moving together.</p>
+            </aside>
+          </div>
+
+          <ol class="timeline">
+            <li class="card role reveal">
+              <p class="role__when"><span class="dot" aria-hidden="true"></span>Now</p>
               <h3>Vice Chair</h3>
               <p class="role__org">IEEE Jadara Student Branch</p>
-            </div>
-            <div class="role reveal" style="--i: 1">
+            </li>
+            <li class="card role reveal" style="--i: 1">
               <p class="role__when">2025-2026</p>
               <h3>Chair</h3>
               <p class="role__org">IEEE Robotics &amp; Automation Society, Jadara chapter</p>
-              <p class="role__note">
-                Led a 7-person team. Awarded the IEEE RAS Chapter Initiative Grant in 2026 for RoboCraft.
-                Partners included Jadara Education and IEEE Jordan Section.
-              </p>
-            </div>
-            <div class="takeaway reveal" style="--i: 2">
-              <p class="takeaway__k">What this shows</p>
-              <p>
-                Running a competition this size on a fixed date meant planning the logistics, bringing
-                partners on board and keeping a 7-person team moving together. Infrastructure work runs
-                on the same discipline.
-              </p>
-            </div>
-          </div>
+              <ul class="role__list">
+                <li>Led a 7-person team through about 30 workshops and events.</li>
+                <li>Organized RoboCraft, with partners including Jadara Education and IEEE Jordan Section.</li>
+                <li>Awarded the IEEE RAS Chapter Initiative Grant in 2026 for RoboCraft.</li>
+              </ul>
+            </li>
+          </ol>
         </div>
       </section>
 
-      <!-- SKILLS -->
-      <section class="skills" id="skills" data-shot="skills" aria-labelledby="skills-h">
-        <div class="wrap">
-          <div class="panel skills__panel">
-            <h2 class="section-title reveal" id="skills-h">Toolkit</h2>
-            <dl class="skill-rows">
-              <div class="reveal" style="--i: 0"><dt>Networking &amp; Security</dt><dd>Cisco networking, Wireshark, Kali Linux, Linux, Bash</dd></div>
-              <div class="reveal" style="--i: 1"><dt>Programming</dt><dd>Python, C++</dd></div>
-              <div class="reveal" style="--i: 2"><dt>Systems &amp; AI</dt><dd>SUMO, TraCI, LSTM models, NVIDIA Jetson, Arduino</dd></div>
-              <div class="reveal" style="--i: 3"><dt>Tooling</dt><dd>Git, GitHub, Docker, OpenStreetMap data</dd></div>
-            </dl>
+      <!-- TOOLKIT -->
+      <section class="section wrap" id="toolkit" aria-labelledby="toolkit-h">
+        <header class="section__head">
+          <p class="section__num">04 <span>Toolkit</span></p>
+          <h2 id="toolkit-h" class="reveal">Tools I Work With</h2>
+        </header>
+        <div class="toolkit">
+          <div class="card tool reveal" style="--i: 0">
+            <h3><span data-icon="shield-check"></span>Networking &amp; Security</h3>
+            <ul class="tags"><li>Cisco networking</li><li>Wireshark</li><li>Kali Linux</li><li>Linux</li><li>Bash</li></ul>
+          </div>
+          <div class="card tool reveal" style="--i: 1">
+            <h3><span data-icon="code"></span>Programming</h3>
+            <ul class="tags"><li>Python</li><li>C++</li></ul>
+          </div>
+          <div class="card tool reveal" style="--i: 2">
+            <h3><span data-icon="cpu"></span>Systems &amp; AI</h3>
+            <ul class="tags"><li>SUMO</li><li>TraCI</li><li>LSTM models</li><li>NVIDIA Jetson</li><li>Arduino</li></ul>
+          </div>
+          <div class="card tool reveal" style="--i: 3">
+            <h3><span data-icon="git-branch"></span>Tooling</h3>
+            <ul class="tags"><li>Git</li><li>GitHub</li><li>Docker</li><li>OpenStreetMap data</li></ul>
           </div>
         </div>
       </section>
 
       <!-- CONTACT -->
-      <section class="contact" id="contact" data-shot="contact" aria-labelledby="contact-h">
-        <div class="wrap">
-          <h2 class="contact__title reveal" id="contact-h">Open to internships in networking &amp; security.</h2>
-          <p class="contact__sub reveal" style="--i: 1">Remote or in Jordan. Email is the fastest way to reach me.</p>
-          <div class="contact__mail reveal" style="--i: 2">
-            <a href="mailto:malkawimohammadh@gmail.com" translate="no">malkawimohammadh@gmail.com</a>
-            <button class="icon-btn" type="button" data-copy="malkawimohammadh@gmail.com" aria-label="Copy Email Address">
-              <span data-icon="copy" class="copy-idle"></span>
-              <span data-icon="check" class="copy-done"></span>
+      <section class="section wrap" id="contact" aria-labelledby="contact-h">
+        <div class="card contact reveal">
+          <p class="section__num">05 <span>Contact</span></p>
+          <h2 id="contact-h">Let's Talk</h2>
+          <p class="contact__sub">Open to internships in networking and security, remote or in Jordan. Email is the fastest way to reach me.</p>
+          <div class="contact__mail">
+            <a class="contact__addr" href="mailto:malkawimohammadh@gmail.com" translate="no">malkawimohammadh@gmail.com</a>
+            <button class="btn btn--secondary btn--sm" type="button" data-copy="malkawimohammadh@gmail.com">
+              <span data-icon="copy" class="copy-idle"></span><span data-icon="check" class="copy-done"></span><span data-copy-label>Copy</span>
             </button>
-            <span class="toast" role="status" aria-live="polite" data-toast></span>
           </div>
-          <ul class="contact__links reveal" style="--i: 3">
-            <li><a class="btn btn--ghost" href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365" target="_blank" rel="noopener"><span data-icon="linkedin-logo"></span>LinkedIn<span data-icon="arrow-up-right"></span></a></li>
-            <li><a class="btn btn--ghost" href="https://github.com/malkawi06" target="_blank" rel="noopener"><span data-icon="github-logo"></span>GitHub<span data-icon="arrow-up-right"></span></a></li>
-            <li><a class="btn btn--ghost" href="./Mohammad-H-Malkawi-CV.pdf" download><span data-icon="download-simple"></span>Download CV</a></li>
-          </ul>
+          <p class="toast" role="status" aria-live="polite" data-toast></p>
+          <div class="contact__ctas">
+            <a class="btn btn--primary" href="mailto:malkawimohammadh@gmail.com"><span data-icon="envelope-simple"></span>Email Me</a>
+            <a class="btn btn--secondary" href="https://linkedin.com/in/mohammad-h-malkawi-3264b5365" target="_blank" rel="noopener"><span data-icon="linkedin-logo"></span>LinkedIn</a>
+            <a class="btn btn--secondary" href="https://github.com/malkawi06" target="_blank" rel="noopener"><span data-icon="github-logo"></span>GitHub</a>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="wrap footer__inner">
-        <p>© 2026 Mohammad H. Malkawi</p>
-        <a href="#top">Back to Top</a>
-      </div>
+    <footer class="footer wrap">
+      <p>© 2026 Mohammad H. Malkawi</p>
+      <a href="#top">Back to Top <span data-icon="arrow-up"></span></a>
     </footer>
 
     <script type="module" src="/src/main.ts"></script>
