@@ -11,6 +11,7 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         salka: resolve(__dirname, "projects/salka.html"),
         clayer: resolve(__dirname, "projects/c-layer.html"),
+        notfound: resolve(__dirname, "404.html"),
       },
     },
   },

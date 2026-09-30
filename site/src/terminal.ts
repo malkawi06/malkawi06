@@ -31,8 +31,9 @@ export function mountTerminal(root: string, onTheme: () => void) {
 
   const go = (hash: string) => {
     dlg.close();
-    const onHome = !location.pathname.includes("/projects/");
-    if (onHome) document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+    // scroll when the section is on this page, otherwise open it on the home page
+    const target = document.querySelector(hash);
+    if (target) target.scrollIntoView({ behavior: "smooth" });
     else location.href = `${root}${hash}`;
   };
 

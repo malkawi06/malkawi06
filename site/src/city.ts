@@ -6,8 +6,10 @@ import {
   BufferGeometry,
   Color,
   CylinderGeometry,
+  Float32BufferAttribute,
   InstancedBufferAttribute,
   InstancedMesh,
+  LineSegments,
   MathUtils,
   Matrix4,
   Mesh,
@@ -17,6 +19,7 @@ import {
   PerspectiveCamera,
   PlaneGeometry,
   Points,
+  QuadraticBezierCurve3,
   Scene,
   ShaderMaterial,
   SphereGeometry,
@@ -55,6 +58,9 @@ type Palette = {
   trafficAlpha: number;
   smoke: string;
   ring: string;
+  net: string;
+  netAlpha: number;
+  packet: string;
   light: number;
   bloom: number;
 };
@@ -79,6 +85,9 @@ const PALETTES: Record<Theme, Palette> = {
     trafficAlpha: 1,
     smoke: "#3a3026",
     ring: "#ffb13b",
+    net: "#ffb13b",
+    netAlpha: 0.4,
+    packet: "#ffe2ad",
     light: 0,
     bloom: 0.5,
   },
@@ -101,6 +110,9 @@ const PALETTES: Record<Theme, Palette> = {
     trafficAlpha: 0.9,
     smoke: "#c9c6bf",
     ring: "#e08a12",
+    net: "#b86a00",
+    netAlpha: 0.55,
+    packet: "#e08a12",
     light: 1,
     bloom: 0.18,
   },
@@ -391,6 +403,39 @@ const flatVert = /* glsl */ `
   }
 `;
 
+const netLineFrag = /* glsl */ `
+  uniform vec3 uColor;
+  uniform float uAlpha;
+  varying vec3 vWorld;
+  ${FOG_GLSL}
+  void main() {
+    gl_FragColor = vec4(applyFog(uColor, vWorld), uAlpha);
+  }
+`;
+
+const packetVert = /* glsl */ `
+  attribute float aSize;
+  uniform float uPixel;
+  varying vec3 vWorld;
+  void main() {
+    vWorld = position;
+    vec4 mv = viewMatrix * vec4(position, 1.0);
+    gl_PointSize = uPixel * aSize / -mv.z;
+    gl_Position = projectionMatrix * mv;
+  }
+`;
+
+const packetFrag = /* glsl */ `
+  uniform vec3 uColor;
+  varying vec3 vWorld;
+  ${FOG_GLSL}
+  void main() {
+    float r = length(gl_PointCoord - 0.5);
+    float a = smoothstep(0.5, 0.28, r);
+    gl_FragColor = vec4(applyFog(uColor, vWorld), a);
+  }
+`;
+
 /* ------------------------------------------------------------------ */
 /* Camera choreography                                                 */
 /* ------------------------------------------------------------------ */
@@ -424,9 +469,11 @@ export type CityOptions = {
   compact?: boolean;
   /** Frame rate ceiling. The slow camera does not need 60 fps. */
   maxFps?: number;
+  /** Draw data links between rooftops with packets moving along them. */
+  network?: boolean;
 };
 
-export function createCity({ canvas, theme, reducedMotion, lowPower, compact = false, maxFps = 60 }: CityOptions) {
+export function createCity({ canvas, theme, reducedMotion, lowPower, compact = false, maxFps = 60, network = false }: CityOptions) {
   const renderer = new WebGLRenderer({ canvas, antialias: !lowPower, powerPreference: "high-performance" });
   renderer.toneMapping = NoToneMapping;
   let dpr = Math.min(window.devicePixelRatio, lowPower ? 1.25 : 1.6);
@@ -438,7 +485,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower, compact = f
 
   const shared = {
     uFog: { value: new Color(pal.fog) },
-    uFogDensity: { value: pal.fogDensity },
+    uFogDensity: { value: pal.fogDensity * (compact ? 0.72 : 1) },
     uCam: { value: new Vector3() },
     uTime: { value: 0 },
     uGlow: { value: new Color(pal.glow) },
@@ -551,6 +598,101 @@ export function createCity({ canvas, theme, reducedMotion, lowPower, compact = f
   boxGeo.setAttribute("aSeed", new InstancedBufferAttribute(seeds, 1));
   buildings.frustumCulled = false;
   scene.add(buildings);
+
+  /* Network: links between the tallest rooftops, packets travelling along them */
+  const netMat = new ShaderMaterial({
+    vertexShader: flatVert,
+    fragmentShader: netLineFrag,
+    uniforms: { ...shared, uColor: { value: new Color(pal.net) }, uAlpha: { value: pal.netAlpha } },
+    transparent: true,
+    depthWrite: false,
+  });
+  const packetMat = new ShaderMaterial({
+    vertexShader: packetVert,
+    fragmentShader: packetFrag,
+    uniforms: { ...shared, uColor: { value: new Color(pal.packet) }, uPixel: { value: 1 } },
+    transparent: true,
+    depthWrite: false,
+    blending: theme === "dark" ? AdditiveBlending : NormalBlending,
+  });
+  const curves: { c: QuadraticBezierCurve3; phase: number; dir: number; speed: number }[] = [];
+  const PER_LINK = 2;
+  let hubCount = 0;
+  let packetGeo: BufferGeometry | null = null;
+  if (network) {
+    // one hub per district: the tallest rooftop in each cell of a 3 x 3 grid, so the links span the city
+    const cell = (EXTENT * 0.9) / 3;
+    const best = new Map<string, Lot>();
+    lots.forEach((l) => {
+      const gx = Math.floor((l.x + EXTENT * 0.45) / cell);
+      const gz = Math.floor((l.z + EXTENT * 0.45) / cell);
+      if (gx < 0 || gx > 2 || gz < 0 || gz > 2) return;
+      const key = `${gx},${gz}`;
+      const cur = best.get(key);
+      if (!cur || l.h > cur.h) best.set(key, l);
+    });
+    const hubs = [...best.values()].map((l) => new Vector3(l.x, l.h + 0.25, l.z));
+    hubCount = hubs.length;
+    // each hub links to its two nearest neighbours
+    const seen = new Set<string>();
+    hubs.forEach((a, i) => {
+      hubs
+        .map((b, j) => ({ j, d: a.distanceTo(b) }))
+        .filter((o) => o.j !== i)
+        .sort((x, y) => x.d - y.d)
+        .slice(0, 2)
+        .forEach(({ j, d }) => {
+          const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+          if (seen.has(key)) return;
+          seen.add(key);
+          const b = hubs[j];
+          const mid = a.clone().add(b).multiplyScalar(0.5);
+          mid.y = Math.max(a.y, b.y) + d * 0.16 + 1;
+          const c = new QuadraticBezierCurve3(a, mid, b);
+          curves.push({ c, phase: rand(), dir: rand() < 0.5 ? 1 : -1, speed: 7 / c.getLength() });
+        });
+    });
+    const SEG = 28;
+    const pts: number[] = [];
+    curves.forEach(({ c }) => {
+      const ps = c.getPoints(SEG);
+      for (let k = 0; k < SEG; k++) pts.push(ps[k].x, ps[k].y, ps[k].z, ps[k + 1].x, ps[k + 1].y, ps[k + 1].z);
+    });
+    const lineGeo = new BufferGeometry();
+    lineGeo.setAttribute("position", new Float32BufferAttribute(pts, 3));
+    const links = new LineSegments(lineGeo, netMat);
+    links.frustumCulled = false;
+    scene.add(links);
+    // one Points object: hub markers first, then the moving packets
+    const count = hubCount + curves.length * PER_LINK;
+    const pos = new Float32Array(count * 3);
+    const size = new Float32Array(count);
+    hubs.forEach((h, i) => {
+      pos.set([h.x, h.y, h.z], i * 3);
+      size[i] = 1.3;
+    });
+    size.fill(1.1, hubCount);
+    packetGeo = new BufferGeometry();
+    packetGeo.setAttribute("position", new BufferAttribute(pos, 3));
+    packetGeo.setAttribute("aSize", new BufferAttribute(size, 1));
+    const dots = new Points(packetGeo, packetMat);
+    dots.frustumCulled = false;
+    scene.add(dots);
+  }
+  const packetPoint = new Vector3();
+  function movePackets(t: number) {
+    if (!packetGeo) return;
+    const attr = packetGeo.getAttribute("position") as BufferAttribute;
+    curves.forEach(({ c, phase, dir, speed }, i) => {
+      for (let k = 0; k < PER_LINK; k++) {
+        let u = (phase + k / PER_LINK + t * speed) % 1;
+        if (dir < 0) u = 1 - u;
+        c.getPoint(u, packetPoint);
+        attr.setXYZ(hubCount + i * PER_LINK + k, packetPoint.x, packetPoint.y, packetPoint.z);
+      }
+    });
+    attr.needsUpdate = true;
+  }
 
   /* Industrial stacks with C-Layer capture rings */
   const stackMat = new ShaderMaterial({
@@ -701,12 +843,13 @@ export function createCity({ canvas, theme, reducedMotion, lowPower, compact = f
     camera.fov = camera.aspect < 0.8 ? 52 : 38;
     camera.updateProjectionMatrix();
     smokeMat.uniforms.uPixel.value = h * renderer.getPixelRatio() * 0.5;
+    packetMat.uniforms.uPixel.value = h * renderer.getPixelRatio() * 0.5;
   }
 
   function applyTheme(next: Theme) {
     pal = PALETTES[next];
     shared.uFog.value.set(pal.fog);
-    shared.uFogDensity.value = pal.fogDensity;
+    shared.uFogDensity.value = pal.fogDensity * (compact ? 0.72 : 1);
     shared.uGlow.value.set(pal.glow);
     shared.uLight.value = pal.light;
     skyMat.uniforms.uSky.value.set(pal.sky);
@@ -727,6 +870,11 @@ export function createCity({ canvas, theme, reducedMotion, lowPower, compact = f
     trafficMat.uniforms.uAlpha.value = pal.trafficAlpha;
     trafficMat.blending = next === "dark" ? AdditiveBlending : NormalBlending;
     trafficMat.needsUpdate = true;
+    netMat.uniforms.uColor.value.set(pal.net);
+    netMat.uniforms.uAlpha.value = pal.netAlpha;
+    packetMat.uniforms.uColor.value.set(pal.packet);
+    packetMat.blending = next === "dark" ? AdditiveBlending : NormalBlending;
+    packetMat.needsUpdate = true;
     bloom.strength = pal.bloom;
     bloom.enabled = next === "dark";
     requestRender();
@@ -809,6 +957,7 @@ export function createCity({ canvas, theme, reducedMotion, lowPower, compact = f
     tmpA.y -= portrait * 4;
     camera.lookAt(tmpA);
     shared.uCam.value.copy(camera.position);
+    movePackets(time);
 
     composer.render(dt);
     dirty = false;

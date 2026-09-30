@@ -28,6 +28,36 @@ if (art && finePointer && !reducedMotion) {
   });
 }
 
+/* ---------- Leadership timeline ---------- */
+// the line fills and each node lights up once it passes 60% of the viewport height
+const tl = document.querySelector<HTMLElement>("[data-timeline]");
+if (tl) {
+  const items = Array.from(tl.querySelectorAll<HTMLElement>(".tl__item"));
+  let queued = false;
+  let near = false;
+  const update = () => {
+    queued = false;
+    const mark = window.innerHeight * 0.6;
+    const r = tl.getBoundingClientRect();
+    tl.style.setProperty("--p", Math.min(1, Math.max(0, (mark - r.top) / r.height)).toFixed(3));
+    items.forEach((it) => it.classList.toggle("is-past", it.getBoundingClientRect().top + 12 < mark));
+  };
+  const onScroll = () => {
+    if (!near || queued) return;
+    queued = true;
+    requestAnimationFrame(update);
+  };
+  new IntersectionObserver(
+    ([e]) => {
+      near = e.isIntersecting;
+      if (near) update();
+    },
+    { rootMargin: "200px 0px" },
+  ).observe(tl);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+}
+
 /* ---------- SALKA demo ---------- */
 const demo = document.querySelector<HTMLElement>("[data-salka-demo]");
 if (demo) mountSalkaDemo(demo);
@@ -35,21 +65,16 @@ if (demo) mountSalkaDemo(demo);
 /* ---------- 3D frames ---------- */
 async function init3D() {
   const cityCanvas = document.querySelector<HTMLCanvasElement>("[data-city-canvas]");
-  const cartCanvas = document.querySelector<HTMLCanvasElement>("[data-cart-canvas]");
-  if (!cityCanvas || !cartCanvas) return;
-  const [{ createCity, webglAvailable }, { createCartridge }] = await Promise.all([import("./city"), import("./cartridge")]);
+  if (!cityCanvas) return;
+  const { createCity, webglAvailable } = await import("./city");
   if (!webglAvailable()) {
     root.classList.add("no-webgl");
     return;
   }
 
-  const city = createCity({ canvas: cityCanvas, theme: currentTheme(), reducedMotion, lowPower: true, compact: true, maxFps: 30 });
-  city.setOrbit({ cx: 0, cz: 0, radius: 30, height: 23, speed: 0.07 });
-  const cart = createCartridge(cartCanvas, currentTheme(), reducedMotion);
-  themeListeners.push((t) => {
-    city.setTheme(t);
-    cart.setTheme(t);
-  });
+  const city = createCity({ canvas: cityCanvas, theme: currentTheme(), reducedMotion, lowPower: true, compact: true, maxFps: 30, network: true });
+  city.setOrbit({ cx: 0, cz: -2, radius: 56, height: 44, speed: 0.06, ty: 2 });
+  themeListeners.push((t) => city.setTheme(t));
 
   // drag or use the arrow keys to rotate the city model
   let dragX: number | null = null;
@@ -73,13 +98,8 @@ async function init3D() {
 
   let visible = true;
   const sync = () => {
-    if (visible && !document.hidden) {
-      city.start();
-      cart.start();
-    } else {
-      city.stop();
-      cart.stop();
-    }
+    if (visible && !document.hidden) city.start();
+    else city.stop();
   };
   new IntersectionObserver(([e]) => {
     visible = e.isIntersecting;

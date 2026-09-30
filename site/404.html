@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <base href="/malkawi06/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Page Not Found | Mohammad H. Malkawi</title>
+    <meta name="description" content="This page does not exist. Head back to Mohammad H. Malkawi’s portfolio." />
+    <meta name="robots" content="noindex" />
+    <meta name="author" content="Mohammad H. Malkawi" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5f5f1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2316161a'/%3E%3Crect x='7' y='7' width='8' height='8' rx='2' fill='%23f2a516'/%3E%3Crect x='17' y='17' width='8' height='8' rx='2' fill='%23f5f5f1'/%3E%3C/svg%3E" />
+    <script>
+      (function () {
+        var d = document.documentElement, t, h = d.getAttribute("data-theme");
+        try { t = localStorage.getItem("theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") t = h === "light" || h === "dark" ? h : null;
+        if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        d.setAttribute("data-theme", t);
+        d.classList.add("js");
+      })();
+    </script>
+  </head>
+  <body data-root="./">
+    <a class="skip" href="#main">Skip to Content</a>
+    <header class="nav" data-nav>
+      <div class="nav__inner wrap">
+        <a class="brand" href="./" aria-label="Mohammad H. Malkawi, home">
+          <span class="brand__mark" aria-hidden="true"><i></i><i></i></span>
+          <span translate="no">Malkawi</span>
+        </a>
+        <nav class="nav__links" aria-label="Sections">
+          <a href="./#about">About</a>
+          <a href="./#projects">Projects</a>
+          <a href="./#leadership">Leadership</a>
+          <a href="./#toolkit">Toolkit</a>
+          <a href="./#contact">Contact</a>
+        </nav>
+        <div class="nav__actions">
+          <button class="icon-btn" type="button" data-term-open aria-label="Open terminal" title="Terminal (Ctrl K)"><span data-icon="terminal-window"></span></button>
+          <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch to dark theme">
+            <span data-icon="moon" class="only-light"></span>
+            <span data-icon="sun" class="only-dark"></span>
+          </button>
+          <a class="btn btn--primary btn--sm nav__cta" href="mailto:malkawimohammadh@gmail.com">Email Me</a>
+          <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+            <span data-icon="list" class="menu-open"></span>
+            <span data-icon="x" class="menu-close"></span>
+          </button>
+        </div>
+      </div>
+      <nav class="menu wrap" id="menu" data-menu hidden aria-label="Sections">
+        <a href="./#about">About</a>
+        <a href="./#projects">Projects</a>
+        <a href="./#leadership">Leadership</a>
+        <a href="./#toolkit">Toolkit</a>
+        <a href="./#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main" class="wrap notfound">
+      <p class="notfound__log" aria-hidden="true"><span>GET</span> <span data-path>/malkawi06/…</span> <span class="notfound__code">404 Not Found</span></p>
+      <h1 class="notfound__num">404</h1>
+      <p class="notfound__title">This page doesn’t exist.</p>
+      <p class="notfound__sub">The link may be old, or the address has a typo. Everything that does exist is one click away.</p>
+      <div class="notfound__ctas">
+        <a class="btn btn--primary" href="./"><span data-icon="arrow-left"></span>Back to Home</a>
+        <a class="btn btn--secondary" href="./#projects">See Projects</a>
+      </div>
+      <p class="notfound__hint">Or press <kbd>Ctrl K</kbd> and type <code>ls</code>.</p>
+    </main>
+    <footer class="footer footer--slim">
+      <div class="wrap">
+        <div class="footer__bar">
+          <p>© 2026 Mohammad H. Malkawi</p>
+          <a class="footer__top" href="./">Home <span data-icon="arrow-up"></span></a>
+        </div>
+      </div>
+    </footer>
+    <script type="module" src="/src/page-404.ts"></script>
+  </body>
+</html>

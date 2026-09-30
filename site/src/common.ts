@@ -139,8 +139,10 @@ const activeIO = new IntersectionObserver(
 });
 
 /* ---------- Reveal and intro ---------- */
+let revealSeen = false;
 const revealIO = new IntersectionObserver(
   (entries) => {
+    revealSeen = true;
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
       e.target.classList.add("in");
@@ -150,6 +152,10 @@ const revealIO = new IntersectionObserver(
   { rootMargin: "0px 0px -6% 0px", threshold: 0.05 },
 );
 document.querySelectorAll(".reveal").forEach((el) => revealIO.observe(el));
+// safety net for hosts where the observer never reports: show everything rather than leave it hidden
+window.setTimeout(() => {
+  if (!revealSeen) document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+}, 3000);
 requestAnimationFrame(() => root.classList.add("is-loaded"));
 
 /* ---------- Count-up ---------- */
@@ -185,7 +191,7 @@ document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
       if (label) label.textContent = "Copied";
       if (toast) toast.textContent = "Email address copied.";
     } catch {
-      const addr = document.querySelector(".contact__addr");
+      const addr = document.querySelector("[data-email-text]");
       if (addr) window.getSelection()?.selectAllChildren(addr);
       if (toast) toast.textContent = "Address selected. Press Ctrl+C to copy it.";
     }
@@ -196,6 +202,39 @@ document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
     }, 2400);
   });
 });
+
+/* ---------- Local time in Irbid ---------- */
+{
+  const el = document.querySelector<HTMLTimeElement>("[data-local-time]");
+  if (el) {
+    let fmt: Intl.DateTimeFormat | null = null;
+    try {
+      fmt = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Amman", timeZoneName: "shortOffset" });
+    } catch {
+      /* very old engines: keep the static "Jordan" text */
+    }
+    let timer = 0;
+    const tick = () => {
+      const now = new Date();
+      const parts = fmt!.formatToParts(now);
+      const zone = parts.find((p) => p.type === "timeZoneName")?.value ?? "";
+      const time = parts
+        .filter((p) => p.type !== "timeZoneName")
+        .map((p) => p.value)
+        .join("")
+        .trim();
+      el.textContent = zone ? `${time} (${zone})` : time;
+      el.dateTime = now.toISOString();
+    };
+    if (fmt)
+      new IntersectionObserver(([e]) => {
+        window.clearInterval(timer);
+        if (!e.isIntersecting) return;
+        tick();
+        timer = window.setInterval(tick, 15000);
+      }).observe(el);
+  }
+}
 
 /* ---------- Card spotlight ---------- */
 if (finePointer && !reducedMotion) {
@@ -222,6 +261,27 @@ if (finePointer && !reducedMotion) {
     },
     { passive: true },
   );
+}
+
+/* ---------- Magnetic primary buttons ---------- */
+if (finePointer && !reducedMotion) {
+  // the button leans a few pixels toward the pointer; `translate` stacks with the hover transform
+  document.querySelectorAll<HTMLElement>(".btn--primary, .mailbtn").forEach((el) => {
+    let raf = 0;
+    el.addEventListener("pointermove", (e) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const r = el.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width - 0.5) * 8;
+        const y = ((e.clientY - r.top) / r.height - 0.5) * 6;
+        el.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+      });
+    });
+    el.addEventListener("pointerleave", () => {
+      cancelAnimationFrame(raf);
+      el.style.translate = "";
+    });
+  });
 }
 
 /* ---------- Terminal ---------- */
