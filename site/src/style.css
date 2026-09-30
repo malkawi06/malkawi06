@@ -1107,22 +1107,106 @@ img {
 
 /* Footer */
 .footer {
+  margin-top: clamp(24px, 4vw, 48px);
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  padding-top: clamp(40px, 6vw, 72px);
+  overflow: hidden;
+}
+/* the big outlined name: stroke drawn under a background-coloured fill hides
+   the overlapping contours inside the variable font */
+.footer__word {
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: min(19vw, 15.5rem);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--bg);
+  -webkit-text-stroke: 2px color-mix(in oklab, var(--ink) 20%, transparent);
+  paint-order: stroke fill;
+  user-select: none;
+}
+.footer__word i {
+  flex: none;
+  width: 0.15em;
+  height: 0.15em;
+  margin-left: 0.06em;
+  border-radius: 0.035em;
+  background: var(--accent);
+}
+.footer__grid {
+  margin-top: clamp(36px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  gap: 32px clamp(20px, 3vw, 40px);
+}
+.footer__tag {
+  max-width: 34ch;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.footer__col h2 {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.footer__col ul {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.footer__col a,
+.footer__col button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.footer__col a:hover,
+.footer__col button:hover {
+  color: var(--accent-ink);
+}
+.footer__bar {
+  margin-top: clamp(40px, 6vw, 72px);
+  border-top: 1px solid var(--line);
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding-block: 28px calc(36px + env(safe-area-inset-bottom, 0px));
+  padding-block: 22px calc(28px + env(safe-area-inset-bottom, 0px));
   color: var(--muted);
   font-size: 0.9rem;
 }
-.footer a {
+.footer__top {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
 }
-.footer a:hover {
+.footer__top:hover {
   color: var(--ink);
+}
+@media (max-width: 860px) {
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footer__tag {
+    grid-column: 1 / -1;
+  }
 }
 
 /* ---------- Card spotlight ---------- */
