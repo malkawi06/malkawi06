@@ -1,13 +1,14 @@
-@import "@fontsource-variable/manrope";
+@import "@fontsource-variable/bricolage-grotesque";
+@import "@fontsource-variable/figtree";
 @import "@fontsource-variable/jetbrains-mono";
-
 /*
   Layout: an engineering notebook. Light paper with a faint drafting grid, one
   readable column of sections, and crisp cards with an offset ink shadow. The 3D
   lives inside framed windows in the hero, never behind the text.
 */
 :root {
-  --font: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font: "Figtree Variable", "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-head: "Bricolage Grotesque Variable", "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
   --mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -134,6 +135,14 @@ h3 {
   text-wrap: balance;
   letter-spacing: -0.025em;
 }
+h1,
+h2,
+h3,
+.brand,
+.frame__num,
+.stats strong {
+  font-family: var(--font-head);
+}
 p {
   text-wrap: pretty;
 }
@@ -145,6 +154,10 @@ p {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
+}
+sub {
+  font-size: 0.72em;
+  line-height: 0;
 }
 img {
   max-width: 100%;

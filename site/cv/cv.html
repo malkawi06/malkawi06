@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>Mohammad H. Malkawi CV</title>
-    <link rel="stylesheet" href="../node_modules/@fontsource-variable/manrope/index.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource-variable/figtree/index.css" />
+    <link rel="stylesheet" href="../node_modules/@fontsource-variable/bricolage-grotesque/index.css" />
     <link rel="stylesheet" href="../node_modules/@fontsource-variable/jetbrains-mono/index.css" />
     <style>
       @page {
@@ -30,7 +31,7 @@
         width: 210mm;
         height: 297mm;
         padding: 15mm 15mm 12mm;
-        font-family: "Manrope Variable", "Manrope", sans-serif;
+        font-family: "Figtree Variable", "Figtree", sans-serif;
         font-size: 9.4pt;
         line-height: 1.45;
         color: var(--ink);
@@ -75,6 +76,10 @@
         grid-column: 2;
         grid-row: 2;
         background: var(--ink);
+      }
+      h1,
+      h3 {
+        font-family: "Bricolage Grotesque Variable", "Bricolage Grotesque", sans-serif;
       }
       h1 {
         font-size: 24pt;
@@ -267,14 +272,14 @@
           </div>
           <div class="item">
             <div class="item__head">
-              <h3>C-Layer, Autonomous CO₂ Capture</h3>
+              <h3>C-Layer, Autonomous CO<sub>2</sub> Capture</h3>
               <span class="when">Concept design</span>
             </div>
             <p class="sub">Sole designer. NVIDIA Jetson Nano, LSTM, NEMA 23/34 steppers, 316L stainless steel</p>
             <ul class="bullets">
               <li>Designed a four-layer capture system for cement and steel stacks: pre-filtration, two MEA and carbon-nanotube absorption stages, and structural support.</li>
               <li>Specified robotic filter swapping, targeted at about 20 seconds per swap with no plant shutdown.</li>
-              <li>Planned an LSTM model on the Jetson to predict remaining filter life from CO₂, pressure and temperature sensors.</li>
+              <li>Planned an LSTM model on the Jetson to predict remaining filter life from CO<sub>2</sub>, pressure and temperature sensors.</li>
               <li>Specified protection for 870°C stacks and a spring-return bypass damper as a fail-safe on power loss.</li>
             </ul>
           </div>
